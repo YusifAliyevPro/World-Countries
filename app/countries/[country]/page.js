@@ -1,7 +1,9 @@
-import Image from "next/image";
+import Country from "@/app/components/country";
+import CountrySkeleton from "@/app/components/countrySkeleton";
+import { Suspense } from "react";
 
 export async function getData({ params }) {
-  const query = `https://restcountries.com/v3.1/name/${params.country}`;
+  const query = `https://restcountries.com/v3.1/alpha?codes=${params.country}`;
   const data = await fetch(
     query,
     { cache: "force-cache" },
@@ -10,27 +12,13 @@ export async function getData({ params }) {
   return data[0];
 }
 
-export default async function Country({ params }) {
-  const country = await getData({ params });
+export default async function CountryPage({ params }) {
+  const countryData = await getData({ params });
   return (
-    <main className="mt-20 min-h-screen relative flex flex-col items-center gap-y-6">
-      <p className="text-black font-bold text-2xl mx-9">
-        Country Name (Common):{" "}
-        <span className=" text-blue-main">{country.name.common}</span>
-      </p>
-      <p className="text-black font-bold text-2xl mx-9">
-        Country Name (Official):{" "}
-        <span className=" text-blue-main">{country.name.official}</span>
-      </p>
-      <p className="text-black font-bold text-2xl mx-9">
-        Capital: <span className=" text-blue-main">{country.capital}</span>
-      </p>
-      <Image
-        alt={country.flags.alt}
-        src={country.flags.svg}
-        width={325}
-        height={180}
-      />
+    <main>
+      <Suspense fallback={<CountrySkeleton />}>
+        <Country country={countryData} />
+      </Suspense>
     </main>
   );
 }
