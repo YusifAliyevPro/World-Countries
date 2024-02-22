@@ -12,6 +12,52 @@ export async function getData({ params }) {
   return data[0];
 }
 
+export async function generateMetadata({ params }) {
+  const country = await getData({ params });
+
+  if (!country) {
+    return notFound();
+  }
+
+  const ogImage1 = [
+    {
+      url: `https://countries-of-world.vercel.app/countries/${country.cca3}/opengraph-image`,
+      width: 1200,
+      height: 600,
+      alt: country.flags.alt,
+    },
+  ];
+  return {
+    title: `${country.name.common}`,
+    url: `https://countries-of-world.vercel.app/countries/${country.cca3}`,
+    description:
+      "World Countries is a website which you can get information about countries all around world",
+    keywords: [
+      "countries",
+      `${country.name.common}`,
+      `${country.name.official}`,
+      "world",
+      "world countries",
+      "countries information",
+      "country flags",
+      "World Countries.com",
+      "yusifaliyevpro",
+      "yusifaliyevpro.com",
+      "yusifaliyev",
+      "yusif",
+      "aliyev",
+    ],
+    openGraph: {
+      title: `${country.name.common} | World Countries`,
+      images: ogImage1,
+      url: `https://countries-of-world.vercel.app/countries/${country.cca3}`,
+      description:
+        "World Countries is a website which you can get information about countries all around world",
+      type: "website",
+    },
+  };
+}
+
 export default async function CountryPage({ params }) {
   const countryData = await getData({ params });
   return (

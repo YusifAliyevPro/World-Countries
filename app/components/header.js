@@ -16,7 +16,12 @@ import { FcGlobe } from "react-icons/fc";
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} isBordered isBlurred={false}>
+    <Navbar
+      className="select-none"
+      onMenuOpenChange={setIsMenuOpen}
+      isBordered
+      isBlurred={false}
+    >
       <NavbarContent>
         <NavbarBrand>
           <Link
@@ -24,7 +29,7 @@ export default function Header() {
             className="relative left-0 flex flex-row items-center gap-1.5 text-xl font-bold"
           >
             <FcGlobe className=" text-3xl font-normal text-blue-600" />
-            <p className="font-bold text-black">Dünya Ölkələri</p>
+            <p className="font-bold text-black">World Countries</p>
           </Link>
         </NavbarBrand>
       </NavbarContent>
@@ -32,21 +37,21 @@ export default function Header() {
         <NavbarItem>
           <Link
             color="foreground"
-            className="hover: text-lg font-bold hidden sm:flex text-slate-700 hover:text-black"
+            className="hover: hidden text-lg font-bold text-slate-700 hover:text-black sm:flex"
             href="/"
             aria-current="page"
           >
-            Ana Səhifə
+            Home Page
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link
             color="foreground"
-            className="hover: text-lg font-bold hidden sm:flex text-slate-700 hover:text-black"
+            className="hover: hidden text-lg font-bold text-slate-700 hover:text-black sm:flex"
             href="/about"
             aria-current="page"
           >
-            Haqqımızda
+            About
           </Link>
         </NavbarItem>
       </NavbarContent>
@@ -58,12 +63,12 @@ export default function Header() {
       <NavbarMenu className="max-h-[200px] items-center justify-center gap-3 overflow-hidden bg-gray-100/90 backdrop-blur-md ">
         <NavbarMenuItem key={1}>
           <Link href="/" className={` w-full text-xl font-bold`}>
-            Ana Səhifə
+            Home Page
           </Link>
         </NavbarMenuItem>
         <NavbarMenuItem key={2}>
           <Link href="/about" className={` w-full text-xl font-bold`}>
-            Haqqımızda
+            About
           </Link>
         </NavbarMenuItem>
       </NavbarMenu>

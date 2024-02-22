@@ -25,9 +25,18 @@ export default async function Home({ searchParams }) {
     typeof searchParams.page === "string" ? Number(searchParams.page) : 1;
 
   const countries = await getData({ search });
-  const resultCount = Number(countries.length);
+  const resultCount = Number(
+    countries.length !== undefined ? countries.length : 0
+  );
   return (
     <main className="mb-10 mt-12">
+      <Suspense fallback={<SearchSkeleton />}>
+        <Search
+          resultCount={resultCount}
+          searchQuery={search}
+          pageQuery={page}
+        />
+      </Suspense>
       <Suspense fallback={<PaginationSkeleton />}>
         <PaginationUI
           count={resultCount}

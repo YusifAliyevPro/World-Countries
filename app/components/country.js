@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import ShowMore from "./showMore";
 
 export default async function Country({ country }) {
   const borderCountryCodes = country.borders;
@@ -19,15 +20,15 @@ export default async function Country({ country }) {
   const borderCountries = await getData();
 
   return (
-    <div className="relative mt-20 flex flex-col mx-16">
-      <div className="relative flex flex-col-reverse sm:flex-row justify-around w-full ">
-        <div className="relative ml-3 flex flex-col text-left text-lg items-left">
-          <h1 className="font-bold text-3xl mt-8 sm:mt-0">
+    <div className="relative mx-6 mt-20 flex flex-col sm:mx-16">
+      <div className="relative flex w-full mb-12 flex-col-reverse justify-between sm:flex-row ">
+        <div className="items-left relative ml-3 flex flex-col text-left text-lg">
+          <h1 className="mt-8 text-3xl font-bold sm:mt-0">
             {country.name.common}
           </h1>
-          <div className=" flex-col sm:flex-row flex gap-x-20">
+          <div className=" flex flex-col gap-x-20 sm:flex-row">
             <div className="flex flex-col gap-y-1 sm:gap-y-2">
-              <p className="font-bold mt-12">
+              <p className="mt-12 font-bold">
                 Native Name:{" "}
                 <span className="font-normal">
                   {country.name.nativeName
@@ -55,8 +56,8 @@ export default async function Country({ country }) {
                 </span>
               </p>
             </div>
-            <div className="flex flex-col gap-y-2">
-              <p className="font-bold mt-12">
+            <div className="mb-8 flex flex-col gap-y-2">
+              <p className="mt-12 font-bold">
                 Population:{" "}
                 <span className="font-normal">
                   {country.population.toLocaleString("en")}
@@ -66,7 +67,7 @@ export default async function Country({ country }) {
                 Sub Region:{" "}
                 <span className="font-normal">{country.subregion}</span>
               </p>
-              <p className="font-bold mr-5">
+              <p className="mr-5 font-bold">
                 Top Level Domain:{" "}
                 <span className="font-normal">
                   {" "}
@@ -85,14 +86,14 @@ export default async function Country({ country }) {
             </div>
           </div>
           {borderCountries.status !== 400 ? (
-            <div className="relative mt-8 mb-16 sm:mb-auto sm:mr-6 flex flex-col sm:flex-row sm:max-w-[700px] items-start sm:items-center">
-              <p className="text-wrap font-bold mr-2">Border Countries: </p>
-              <div className="flex-row flex mt-6 sm:mt-auto relative flex-wrap gap-2 sm:mr-5">
+            <div className="relative flex flex-col items-start sm:mb-auto sm:mr-6 sm:max-w-[700px] sm:flex-row sm:items-center">
+              <p className="mr-2 text-wrap font-bold">Border Countries: </p>
+              <div className="relative mt-6 flex flex-row flex-wrap gap-2 sm:mr-5 sm:mt-auto">
                 {borderCountries.map((country, index) => (
                   <Link
                     key={index}
                     href={`/countries/${country.cca3}`}
-                    className=" p-2 border-solid border-1 text-center flex-1 sm:flex-none rounded-lg hover:text-neutral-600 hover:border-black"
+                    className=" flex-1 select-none text-nowrap rounded-lg border-1 border-solid p-2 text-center hover:border-black hover:text-neutral-600 sm:flex-none"
                   >
                     <p className="font-normal">{country.name.common}</p>
                   </Link>
@@ -103,16 +104,17 @@ export default async function Country({ country }) {
             ""
           )}
         </div>
-        <div className="relative flex max-h-[200px] sm:max-h-[400px] bg-transparent">
+        <div className="relative mx-5 flex bg-transparent h-auto max-w-[100%] sm:mx-0 ">
           <Image
             src={country.flags.svg}
             width={600}
             height={400}
             alt={country.flags.alt}
-            className=" object-fill bg-transparent"
+            className=" select-none object-cover drop-shadow-2xl rounded-md shadow-large"
           />
         </div>
       </div>
+      <ShowMore country={country} />
     </div>
   );
 }

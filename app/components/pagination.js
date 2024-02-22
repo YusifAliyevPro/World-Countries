@@ -15,7 +15,7 @@ export default function PaginationUI({ pageQuery, searchQuery, count }) {
         `/${searchQuery !== undefined ? "?search=" + searchQuery : ""}`,
         {
           scroll: false,
-        }
+        },
       );
     } else if (page > total) {
       router.push(
@@ -24,7 +24,7 @@ export default function PaginationUI({ pageQuery, searchQuery, count }) {
         }page=${total}`,
         {
           scroll: false,
-        }
+        },
       );
     } else {
       router.push(
@@ -33,13 +33,13 @@ export default function PaginationUI({ pageQuery, searchQuery, count }) {
         }page=${page}`,
         {
           scroll: false,
-        }
+        },
       );
     }
   }, [page, router]);
 
   return count !== 0 ? (
-    <div className="relative mt-5 flex items-center justify-center w-full">
+    <div className="relative mt-5 flex w-full items-center justify-center">
       <Pagination
         total={total !== 0 ? total : 1}
         page={pageQuery < total ? pageQuery : total}

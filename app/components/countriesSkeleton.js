@@ -7,33 +7,26 @@ export default function CountriesSkeleton() {
           <div
             key={i}
             scroll={false}
-            className="justify-content-center transition-transform duration-300 ease-in-out hover:scale-110 relative mt-10 inline-block w-[325px] select-none items-center justify-center rounded-xl bg-gray-200 text-center"
+            className="justify-content-center relative mt-10 inline-block w-[325px] select-none items-center justify-center rounded-xl bg-gray-200 text-center transition-transform duration-300 ease-in-out hover:scale-110"
           >
             <div className="relative">
-              <div className="object-cover bg-gray-400 animate-pulse h-[185px] w-full rounded-t-md" />
+              <div className="h-[185px] w-full animate-pulse rounded-t-md bg-gray-400 object-cover" />
             </div>
-            <p className="text-black text-left ml-8 font-bold text-2xl my-3">
-              <span className=" bg-gray-400 w-fit animate-pulse text-gray-400 rounded-md">
-                Azerbaijan
+            <p className="my-3 ml-8 text-left text-2xl font-bold text-black">
+              <span className=" w-fit animate-pulse rounded-md bg-gray-400 text-gray-400">
+                AzerbaijanTurkey
               </span>
             </p>
-            <p className="text-slate-900 text-left ml-8  text-md my-3">
-              <span className="font-bold">Capital: </span>{" "}
-              <span className=" bg-gray-400 w-fit animate-pulse text-gray-400 rounded-md">
-                Canberra
-              </span>
+            <p className="text-md my-3 ml-8 animate-pulse rounded-md bg-gray-400 text-gray-400 text-left w-fit">
+              <span className="font-bold">Capital: </span> <span>Canberra</span>
             </p>
-            <p className="text-slate-900 text-left ml-8  text-md my-3">
+            <p className="text-md my-3 ml-8 animate-pulse rounded-md bg-gray-400 text-gray-400 text-left w-fit">
               <span className="font-bold">Region: </span>{" "}
-              <span className=" bg-gray-400 w-fit animate-pulse text-gray-400 rounded-md">
-                Asia
-              </span>
+              <span className=" w-fit">Asia</span>
             </p>
-            <p className="text-slate-900 text-left ml-8  text-md my-3">
+            <p className="text-md my-3 ml-8  text-left w-fit animate-pulse rounded-md bg-gray-400 text-gray-400">
               <span className="font-bold">Population: </span>{" "}
-              <span className=" bg-gray-400 w-fit animate-pulse text-gray-400 rounded-md">
-                2932932929
-              </span>
+              <span>2932932</span>
             </p>
           </div>
         ))}
