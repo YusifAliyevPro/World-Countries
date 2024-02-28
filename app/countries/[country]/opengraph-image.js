@@ -28,11 +28,13 @@ export default async function Image({ params }) {
   return new ImageResponse(
     (
       <div tw="relative flex w-full h-full items-center justify-center">
-        <div tw="absolute flex inset-0 w-[1200px] h-[600px]">
+        <div tw="absolute flex inset-0">
           <img
             src={country.flags.svg}
+            width={1200}
+            height={600}
             alt={country.name.common}
-            tw="object-cover w-[1200px] h-[600px] flex flex-1"
+            tw=" flex flex-1"
           />
           <div tw="absolute flex inset-0 bg-black bg-opacity-70 z-10" />
         </div>
@@ -52,7 +54,7 @@ export default async function Image({ params }) {
       ],
       height: 600,
       width: 1200,
-      alt: `World Countries | ${country.flags.alt}`,
+      alt: `${country.flags.alt} | World Countriess`,
     }
   );
 }

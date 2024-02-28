@@ -29,7 +29,7 @@ export default function Header() {
             className="relative left-0 flex flex-row items-center gap-1.5 text-xl font-bold"
           >
             <FcGlobe className=" text-3xl font-normal text-blue-600" />
-            <p className="font-bold text-black">World Countries</p>
+            <p className="font-bold text-black">World Countriess</p>
           </Link>
         </NavbarBrand>
       </NavbarContent>

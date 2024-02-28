@@ -5,6 +5,24 @@ import PaginationSkeleton from "./components/paginationSkeleton";
 import CountriesSkeleton from "./components/countriesSkeleton";
 import Search from "./components/search";
 import SearchSkeleton from "./components/searchSkeleton";
+import { baseURL } from "./lib/bases";
+
+const ogImage = [
+  {
+    url: `${baseURL}/World-countriess.png`,
+    width: 1400,
+    height: 1080,
+    alt: "World Countriess",
+  },
+];
+
+export const metadata = {
+  title: "Home | World Countriess",
+  openGraph: {
+    title: `Home | World Countriess`,
+    images: ogImage,
+  },
+};
 
 export default async function Home({ searchParams }) {
   async function getData() {

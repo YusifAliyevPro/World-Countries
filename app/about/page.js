@@ -2,34 +2,48 @@ import Link from "next/link";
 import { BiLogoTailwindCss } from "react-icons/bi";
 import { FaReact } from "react-icons/fa";
 import { TbApi } from "react-icons/tb";
+import { SiNextdotjs, SiNextui, SiVercel } from "react-icons/si";
+
+const ogImage = [
+  {
+    url: `https://world-countriess.vercel.app/World-countriess.png`,
+    width: 1400,
+    height: 1080,
+    alt: "World Countriess",
+  },
+];
 
 export const metadata = {
   title: "About",
-  url: "https://countries-of-world.vercel.app/about",
+  url: "https://world-countriess.vercel.app/about",
   description:
     "My main goal in creating this project is to improve my coding skills and add a new project to my portfolio.",
   keywords: [
     "countries",
     "world",
+    "World-Countriess",
+    "World Countriess",
     "Vercel",
     "Tailwind CSS",
     "Rest Countries API",
     "React-Icons",
     "NextJS",
     "NextUI",
-    "world countries",
+    "world countriess",
     "countries information",
     "country flags",
-    "World Countries.com",
     "yusifaliyevpro",
+    "filmisbest.com",
+    "filmisbest",
     "yusifaliyevpro.com",
     "yusifaliyev",
     "yusif",
     "aliyev",
   ],
   openGraph: {
-    title: `About | World Countries`,
-    url: `https://countries-of-world.vercel.app/about`,
+    title: `About | World Countriess`,
+    images: ogImage,
+    url: `https://world-countriess.vercel.app/about`,
     description:
       "My main goal in creating this project is to improve my coding skills and add a new project to my portfolio.",
     type: "website",
@@ -47,44 +61,53 @@ export default function About() {
         </p>
         <p>I used the following tools when creating this site.</p>
         <div className="tools flex relative my-8 select-none flex-1 flex-col flex-wrap gap-y-8 sm:flex-row gap-x-8 items-center justify-center">
-          <Link target="_blank" href={"https://nextjs.org/"}>
-            <div className="flex flex-col gap-y-2 items-center hover:bg-gray-100 p-3 shadow-large drop-shadow-2xl rounded-xl justify-center">
-              <p>NextJS 14.1.0</p>
-              <img src="/next.svg" alt="NextJS Logo" width={80} height={80} />
-            </div>
-          </Link>
-          <Link target="_blank" href={"https://vercel.com/"}>
-            <div className="flex flex-col gap-y-5 items-center hover:bg-gray-100 p-3 shadow-large drop-shadow-2xl rounded-xl justify-center">
-              <p>Vercel Hosting</p>
-              <img src="/vercel.svg" alt="Vercel Logo" width={80} height={80} />
-            </div>
-          </Link>
-          <Link target="_blank" href={"https://restcountries.com/"}>
-            <div className="flex flex-col gap-y-3 items-center hover:bg-gray-100 p-3 shadow-large drop-shadow-2xl rounded-xl justify-center">
-              <p>Countries API</p>
-              <TbApi className="text-7xl" />
-            </div>
-          </Link>
-          <Link target="_blank" href={"https://nextui.org/"}>
-            <div className="flex flex-col gap-y-2 items-center hover:bg-gray-100 p-3 shadow-large drop-shadow-2xl rounded-xl justify-center">
-              <p>NextUI</p>
-              <img src="/nextui.png" alt="NextUI Logo" width={80} height={80} />
-            </div>
-          </Link>
-          <Link target="_blank" href={"https://tailwindcss.com/"}>
-            <div className="flex flex-col gap-y-2 items-center hover:bg-gray-100 p-3 shadow-large drop-shadow-2xl rounded-xl justify-center">
-              <p>Tailwind CSS</p>
-              <BiLogoTailwindCss className="text-8xl text-[#38bdf8]" />
-            </div>
+          <Link
+            target="_blank"
+            className="flex flex-col  gap-y-2 items-center hover:bg-gray-100 p-3 shadow-large drop-shadow-2xl rounded-xl justify-center"
+            href={"https://nextjs.org/"}
+          >
+            <p>NextJS 14.1.0</p>
+            <SiNextdotjs className="text-7xl" />
           </Link>
           <Link
             target="_blank"
+            className="flex flex-col  gap-y-2 items-center hover:bg-gray-100 p-3 shadow-large drop-shadow-2xl rounded-xl justify-center"
+            href={"https://vercel.com/"}
+          >
+            <p>Vercel Hosting</p>
+            <SiVercel className="text-7xl" />
+          </Link>
+          <Link
+            target="_blank"
+            className="flex flex-col  gap-y-2 items-center hover:bg-gray-100 p-3 shadow-large drop-shadow-2xl rounded-xl justify-center"
+            href={"https://restcountries.com/"}
+          >
+            <p>Countries API</p>
+            <TbApi className="text-7xl" />
+          </Link>
+          <Link
+            target="_blank"
+            className="flex flex-col gap-y-2 items-center hover:bg-gray-100 p-3 shadow-large drop-shadow-2xl rounded-xl justify-center"
+            href={"https://nextui.org/"}
+          >
+            <p>NextUI</p>
+            <SiNextui className="text-8xl sm:text-7xl" />
+          </Link>
+          <Link
+            target="_blank"
+            className="flex flex-col  gap-y-2 items-center hover:bg-gray-100 p-3 shadow-large drop-shadow-2xl rounded-xl justify-center"
+            href={"https://tailwindcss.com/"}
+          >
+            <p>Tailwind CSS</p>
+            <BiLogoTailwindCss className="text-8xl text-[#38bdf8]" />
+          </Link>
+          <Link
+            target="_blank"
+            className="flex flex-col  gap-y-2 items-center hover:bg-gray-100 p-3 shadow-large drop-shadow-2xl rounded-xl justify-center"
             href={"https://react-icons.github.io/react-icons/"}
           >
-            <div className="flex flex-col gap-y-2 items-center hover:bg-gray-100 p-3 shadow-large drop-shadow-2xl rounded-xl justify-center">
-              <p>React Icons</p>
-              <FaReact className="text-8xl text-[#e91e63]" />
-            </div>
+            <p>React Icons</p>
+            <FaReact className="text-8xl text-[#e91e63]" />
           </Link>
         </div>
         <p>
@@ -93,7 +116,7 @@ export default function About() {
             href={"https://rest-api-countries-with-react.netlify.app/"}
             className="text-blue-600 hover:text-blue-800"
           >
-            Rest API Countries
+            Rest Countries API
           </Link>
         </p>
         <p>
@@ -102,7 +125,7 @@ export default function About() {
             className="text-blue-600 hover:text-blue-800"
             href={"https://github.com/YusifAliyevPro/World-Countries"}
           >
-            World Countries Repository
+            World Countriess Repository
           </Link>
         </p>
       </div>

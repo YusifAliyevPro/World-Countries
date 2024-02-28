@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dotlottie/react-player": "^1.6.17",
     "@nextui-org/react": "^2.2.9",
     "framer-motion": "^11.0.5",
     "i18next": "^23.8.3",

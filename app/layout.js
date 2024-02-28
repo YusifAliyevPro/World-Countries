@@ -7,6 +7,7 @@ import "react-icons/bi";
 import "react-icons/fa";
 import Footer from "./components/footer";
 import { Toaster } from "react-hot-toast";
+import { baseURL } from "./lib/bases";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,34 +20,48 @@ export const metadata = {
       follow: true,
     },
   },
+  icons: {
+    icon: "/icon.ico",
+    shortcut: "/icon.ico",
+    apple: "/icon.ico",
+    other: {
+      rel: "apple-touch-icon-precomposed",
+      url: "/icon.ico",
+    },
+  },
   title: {
-    default: "World Countries",
-    template: "%s | World Countries",
+    default: "World Countriess",
+    template: "%s | World Countriess",
   },
   keywords: [
     "countries",
     "world",
-    "world countries",
+    "world countriess",
+    "World-Countriess",
+    "World Countriess",
     "countries information",
     "country flags",
-    "World Countries.com",
     "yusifaliyevpro",
+    "YusifAliyevPro",
     "yusifaliyevpro.com",
+    "filmisbest.com",
+    "filmisbest",
     "yusifaliyev",
     "yusif",
     "aliyev",
   ],
   creator: "YusifAliyevPro",
-  url: "https://countries-of-world.vercel.app/",
+  url: `${baseURL}/`,
   publisher: "YusifAliyevPro",
-  applicationName: "World Countries",
-  generator: "World Countries",
+  applicationName: "World Countriess",
+  generator: "World Countriess",
   authors: [{ name: "YusifAliyevPro", url: "https://yusifaliyevpro.com" }],
-  siteName: "World Countries",
+  siteName: "World Countriess",
   openGraph: {
     type: "website",
-    url: "https://countries-of-world.vercel.app/",
-    siteName: "World Countries",
+    title: "World Countriess",
+    url: `${baseURL}/`,
+    siteName: "World Countriess",
     locale: "en_US",
   },
 };
@@ -54,6 +69,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="bg-white text-black scroll-smooth light">
+      <head>
+        <meta
+          name="google-site-verification"
+          content="HNjp-JRQToNMjuOEzQ7iFVr2h4sZi4q26x4Tli62gow"
+        />
+      </head>
       <body className={inter.className}>
         <Toaster
           toastOptions={{

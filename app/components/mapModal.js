@@ -1,18 +1,16 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalContent,
-  ModalHeader,
   ModalBody,
-  ModalFooter,
-  Button,
   useDisclosure,
 } from "@nextui-org/react";
 import Image from "next/image";
 
 export default function MapModal({ country, ButtonText, mapOrCoat }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [loaded, setLoaded] = useState(false);
   console.log(country.coatOfArms);
 
   return (
@@ -45,12 +43,18 @@ export default function MapModal({ country, ButtonText, mapOrCoat }) {
                     ></iframe>
                   ) : (
                     <div>
+                      <div
+                        className={`fixed left-1/2 right-1/2 mt-32 items-center justify-center ${loaded ? "hidden" : "flex"}`}
+                      >
+                        <p className="font-bold text-3xl">Loading...</p>
+                      </div>
                       <Image
                         src={country.coatOfArms.svg}
                         width={400}
                         height={400}
+                        onLoad={() => setLoaded(true)}
                         alt={country.flags.alt}
-                        className=" select-none bg-transparent object-fill"
+                        className="select-none bg-transparent object-fill"
                       />
                     </div>
                   )}

@@ -22,8 +22,8 @@ export default async function Country({ country }) {
   return (
     <div className="relative mx-6 mt-20 flex flex-col sm:mx-16">
       <div className="relative flex w-full mb-12 flex-col-reverse justify-between sm:flex-row ">
-        <div className="items-left relative ml-3 flex flex-col text-left text-lg">
-          <h1 className="mt-8 text-3xl font-bold sm:mt-0">
+        <div className="items-left relative sm:max-w-[50%] ml-3 flex flex-col text-left text-lg">
+          <h1 className="mt-8 text-3xl text-nowrap font-bold sm:mt-0">
             {country.name.common}
           </h1>
           <div className=" flex flex-col gap-x-20 sm:flex-row">
@@ -39,8 +39,14 @@ export default async function Country({ country }) {
               <p className="font-bold">
                 Region: <span className="font-normal">{country.region}</span>
               </p>
-              <p className="font-bold">
-                Capital: <span className="font-normal">{country.capital}</span>
+              <p className="font-bold truncate sm:max-w-[250px]">
+                Capital:{" "}
+                <span
+                  title={country.capital ? country.capital.join(", ") : ""}
+                  className="font-normal"
+                >
+                  {country.capital ? country.capital.join(", ") : ""}
+                </span>
               </p>
               <p className="font-bold">
                 Currencies:{" "}
@@ -67,16 +73,28 @@ export default async function Country({ country }) {
                 Sub Region:{" "}
                 <span className="font-normal">{country.subregion}</span>
               </p>
-              <p className="mr-5 font-bold">
+              <p className="font-bold sm:truncate sm:max-w-[230px]">
                 Top Level Domain:{" "}
-                <span className="font-normal">
+                <span
+                  title={
+                    country.tld ? Object.values(country.tld).join(", ") : ""
+                  }
+                  className="font-normal"
+                >
                   {" "}
                   {country.tld ? Object.values(country.tld).join(", ") : ""}
                 </span>
               </p>
-              <p className="font-bold">
+              <p className="font-bold sm:truncate sm:max-w-[200px]">
                 Languages:{" "}
-                <span className="font-normal">
+                <span
+                  title={
+                    country.languages
+                      ? Object.values(country.languages).join(", ")
+                      : ""
+                  }
+                  className="font-normal"
+                >
                   {" "}
                   {country.languages
                     ? Object.values(country.languages).join(", ")
@@ -104,13 +122,11 @@ export default async function Country({ country }) {
             ""
           )}
         </div>
-        <div className="relative mx-5 flex bg-transparent h-auto max-w-[100%] sm:mx-0 ">
-          <Image
+        <div className="relative mx-5 flex bg-transparent h-auto sm:max-w-[50%] sm:mx-0 ">
+          <img
             src={country.flags.svg}
-            width={600}
-            height={400}
             alt={country.flags.alt}
-            className=" select-none object-cover drop-shadow-2xl rounded-md shadow-large"
+            className=" select-none object-cover h-auto drop-shadow-2xl shadow-large rounded-md"
           />
         </div>
       </div>
