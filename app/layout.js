@@ -88,7 +88,6 @@ export default function RootLayout({ children }) {
         />
         <Header />
         <Providers>
-          {" "}
           <main className=" flex min-h-screen flex-col ">{children}</main>
         </Providers>
         <Footer />

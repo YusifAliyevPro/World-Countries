@@ -6,6 +6,7 @@ import CountriesSkeleton from "./components/countriesSkeleton";
 import Search from "./components/search";
 import SearchSkeleton from "./components/searchSkeleton";
 import { baseURL } from "./lib/bases";
+import { MotionDiv } from "./components/motionDiv";
 
 const ogImage = [
   {
@@ -63,11 +64,22 @@ export default async function Home({ searchParams }) {
         />
       </Suspense>
       <Suspense fallback={<CountriesSkeleton />}>
-        {resultCount !== 0 ? (
-          <Countries countries={countries} page={page} />
-        ) : (
-          ""
-        )}
+        <MotionDiv
+          initial={{ y: 600, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            type: "spring",
+            stiffness: 60,
+            duration: 1.5,
+            delay: 0.5,
+          }}
+        >
+          {resultCount !== 0 ? (
+            <Countries countries={countries} page={page} />
+          ) : (
+            ""
+          )}
+        </MotionDiv>
       </Suspense>
       <div className="my-8">
         <Suspense fallback={<PaginationSkeleton />}>

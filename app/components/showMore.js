@@ -2,13 +2,23 @@
 import React from "react";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import MapModal from "./mapModal";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { MotionDiv } from "./motionDiv";
 
 export default function ShowMore({ country }) {
   const router = useRouter();
   return (
-    <div className="mb-10 w-full sm:w-3/5">
+    <MotionDiv
+      initial={{ opacity: 0, y: -30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.8,
+        delay: country.borders ? 3.5 : 2.8,
+        type: "spring",
+        stiffness: 100,
+      }}
+      className="mb-10 w-full sm:w-3/5"
+    >
       <Accordion hideIndicator>
         <AccordionItem
           classNames={{
@@ -85,6 +95,6 @@ export default function ShowMore({ country }) {
           </div>
         </AccordionItem>
       </Accordion>
-    </div>
+    </MotionDiv>
   );
 }

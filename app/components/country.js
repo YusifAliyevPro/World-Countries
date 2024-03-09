@@ -1,6 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import ShowMore from "./showMore";
+import { MotionDiv } from "./motionDiv";
+import { MotionH1 } from "./motionH1";
+import { Suspense } from "react";
 
 export default async function Country({ country }) {
   const borderCountryCodes = country.borders;
@@ -23,10 +25,21 @@ export default async function Country({ country }) {
     <div className="relative mx-6 mt-20 flex flex-col sm:mx-16">
       <div className="relative flex w-full mb-12 flex-col-reverse justify-between sm:flex-row ">
         <div className="items-left relative sm:max-w-[50%] ml-3 flex flex-col text-left text-lg">
-          <h1 className="mt-8 text-3xl text-nowrap font-bold sm:mt-0">
+          <MotionH1
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.4, type: "spring" }}
+            title={country.name.common}
+            className="mt-8 text-4xl w-fit z-50 sm:text-nowrap font-bold sm:mt-0"
+          >
             {country.name.common}
-          </h1>
-          <div className=" flex flex-col gap-x-20 sm:flex-row">
+          </MotionH1>
+          <MotionDiv
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 2.2, type: "spring" }}
+            className=" flex flex-col gap-x-20 sm:flex-row"
+          >
             <div className="flex flex-col gap-y-1 sm:gap-y-2">
               <p className="mt-12 font-bold">
                 Native Name:{" "}
@@ -102,9 +115,14 @@ export default async function Country({ country }) {
                 </span>
               </p>
             </div>
-          </div>
+          </MotionDiv>
           {borderCountries.status !== 400 ? (
-            <div className="relative flex flex-col items-start sm:mb-auto sm:mr-6 sm:max-w-[700px] sm:flex-row sm:items-center">
+            <MotionDiv
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 2.8, type: "spring" }}
+              className="relative flex flex-col items-start sm:mb-auto sm:mr-6 sm:max-w-[700px] sm:flex-row sm:items-center"
+            >
               <p className="mr-2 text-wrap font-bold">Border Countries: </p>
               <div className="relative mt-6 flex flex-row flex-wrap gap-2 sm:mr-5 sm:mt-auto">
                 {borderCountries.map((country, index) => (
@@ -117,20 +135,32 @@ export default async function Country({ country }) {
                   </Link>
                 ))}
               </div>
-            </div>
+            </MotionDiv>
           ) : (
             ""
           )}
         </div>
-        <div className="relative mx-5 flex bg-transparent h-auto sm:max-w-[50%] sm:mx-0 ">
+        <MotionDiv
+          initial={{ opacity: 0, y: -1000 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 1.2,
+            delay: 0.5,
+            type: "spring",
+            stiffness: 70,
+          }}
+          className="relative mx-5 flex bg-transparent h-auto sm:max-w-[50%] sm:mx-0 "
+        >
           <img
             src={country.flags.svg}
             alt={country.flags.alt}
             className=" select-none object-cover h-auto drop-shadow-2xl shadow-large rounded-md"
           />
-        </div>
+        </MotionDiv>
       </div>
-      <ShowMore country={country} />
+      <Suspense fallback={<p>Loading...</p>}>
+        <ShowMore country={country} />
+      </Suspense>
     </div>
   );
 }
