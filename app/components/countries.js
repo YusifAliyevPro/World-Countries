@@ -19,10 +19,10 @@ export default function Countries({ countries, page }) {
         <MotionDiv
           initial={{ scale: 1 }}
           whileHover={{ scale: 1.1 }}
+          key={index}
           transition={{ type: "spring", stiffness: 120, duration: 0.6 }}
         >
           <Link
-            key={index}
             href={`/countries/${country.cca3}`}
             className="justify-content-center relative mt-10 inline-block w-[325px] select-none items-center justify-center rounded-xl bg-gray-200 text-center"
           >

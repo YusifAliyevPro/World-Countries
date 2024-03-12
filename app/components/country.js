@@ -30,7 +30,7 @@ export default async function Country({ country }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.4, type: "spring" }}
             title={country.name.common}
-            className="mt-8 text-4xl w-fit z-50 sm:text-nowrap font-bold sm:mt-0"
+            className="mt-8 text-4xl w-fit sm:text-nowrap font-bold sm:mt-0"
           >
             {country.name.common}
           </MotionH1>

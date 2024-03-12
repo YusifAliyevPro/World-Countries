@@ -138,6 +138,7 @@ export default function About() {
             <MotionDiv
               initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
+              key={index}
               transition={{
                 type: "spring",
                 duration: 0.3,
@@ -147,7 +148,6 @@ export default function About() {
             >
               <Link
                 target="_blank"
-                key={index}
                 className="flex flex-col  gap-y-2 items-center hover:bg-gray-100 p-3 shadow-large drop-shadow-2xl rounded-xl justify-center"
                 href={tool.link}
               >
@@ -172,6 +172,7 @@ export default function About() {
           <Link
             href={"https://rest-api-countries-with-react.netlify.app/"}
             className="text-blue-600 hover:text-blue-800"
+            target="_blank"
           >
             Rest Countries API
           </Link>
@@ -190,6 +191,7 @@ export default function About() {
           <Link
             className="text-blue-600 hover:text-blue-800"
             href={"https://github.com/YusifAliyevPro/World-Countries"}
+            target="_blank"
           >
             World Countriess Repository
           </Link>
