@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Modal,
   ModalContent,
@@ -7,17 +7,17 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import Image from "next/image";
+import { GoogleMapsEmbed } from "@next/third-parties/google";
 
 export default function MapModal({ country, ButtonText, mapOrCoat }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [loaded, setLoaded] = useState(false);
-  console.log(country.coatOfArms);
 
   return (
     <div>
       <p
         onClick={onOpen}
-        className=" text-md w-fit hover:text-gray-600 cursor-pointer font-bold"
+        className=" text-md select-none w-fit text-blue-500 hover:text-blue-600 cursor-pointer font-bold"
       >
         {ButtonText}
       </p>
@@ -33,14 +33,14 @@ export default function MapModal({ country, ButtonText, mapOrCoat }) {
               <ModalBody>
                 <div className="relative mx-4 my-4 flex items-center justify-center">
                   {mapOrCoat === "map" ? (
-                    <iframe
-                      src={`https://maps.google.com/maps?q=${country.latlng[0]},${country.latlng[1]}&t=&z=5&ie=UTF8&iwloc=&output=embed`}
-                      width={800}
+                    <GoogleMapsEmbed
+                      apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API}
                       height={500}
-                      aria-label="GoogleMap"
-                      loading="lazy"
-                      className=" object-fill"
-                    ></iframe>
+                      width={600}
+                      mode="place"
+                      zoom="4"
+                      q={`${country.latlng[0]},${country.latlng[1]}`}
+                    />
                   ) : (
                     <div>
                       <div

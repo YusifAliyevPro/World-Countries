@@ -69,9 +69,8 @@ export default async function Home({ searchParams }) {
           animate={{ y: 0, opacity: 1 }}
           transition={{
             type: "spring",
-            stiffness: 60,
+            stiffness: 50,
             duration: 1.5,
-            delay: 0.5,
           }}
         >
           {resultCount !== 0 ? (

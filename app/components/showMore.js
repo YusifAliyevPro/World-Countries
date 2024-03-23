@@ -13,7 +13,7 @@ export default function ShowMore({ country }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{
         duration: 0.8,
-        delay: country.borders ? 3.5 : 2.8,
+        delay: country.borders ? 4.2 : 3.4,
         type: "spring",
         stiffness: 100,
       }}
@@ -84,12 +84,12 @@ export default function ShowMore({ country }) {
           <div className="flex flex-col gap-y-5 sm:gap-y-0 mt-8 sm:mt-0 sm:flex-row justify-between">
             <MapModal
               country={country}
-              ButtonText="Click to show on map"
+              ButtonText="Click to show on Map"
               mapOrCoat="map"
             />
             <MapModal
               country={country}
-              ButtonText="Click to show coat of army"
+              ButtonText="Click to show Coat of Army"
               mapOrCoat="coat"
             />
           </div>

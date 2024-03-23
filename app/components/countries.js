@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MotionDiv } from "./motionDiv";
-import { NextAnimatePresence } from "./AnimatePresence";
 
 export default function Countries({ countries, page }) {
   const startIndex = (page - 1) * 42;

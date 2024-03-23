@@ -3,6 +3,8 @@ import ShowMore from "./showMore";
 import { MotionDiv } from "./motionDiv";
 import { MotionH1 } from "./motionH1";
 import { Suspense } from "react";
+import Breadcrumb from "./breadcrumb";
+import Share from "./share";
 
 export default async function Country({ country }) {
   const borderCountryCodes = country.borders;
@@ -22,7 +24,7 @@ export default async function Country({ country }) {
   const borderCountries = await getData();
 
   return (
-    <div className="relative mx-6 mt-20 flex flex-col sm:mx-16">
+    <div className="relative mx-6 mt-5 flex flex-col sm:mx-16">
       <div className="relative flex w-full mb-12 flex-col-reverse justify-between sm:flex-row ">
         <div className="items-left relative sm:max-w-[50%] ml-3 flex flex-col text-left text-lg">
           <MotionH1
@@ -141,7 +143,7 @@ export default async function Country({ country }) {
           )}
         </div>
         <MotionDiv
-          initial={{ opacity: 0, y: -1000 }}
+          initial={{ opacity: 0, y: -600 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 1.2,
@@ -149,18 +151,26 @@ export default async function Country({ country }) {
             type: "spring",
             stiffness: 70,
           }}
-          className="relative mx-5 flex bg-transparent h-auto sm:max-w-[50%] sm:mx-0 "
+          className="relative mx-5 flex flex-col gap-y-6 items-end bg-transparent h-auto sm:max-w-[50%] sm:mx-0 "
         >
           <img
             src={country.flags.svg}
             alt={country.flags.alt}
             className=" select-none object-cover h-auto drop-shadow-2xl shadow-large rounded-md"
           />
+          <div className="hidden lg:flex">
+            <Share country={country} />
+          </div>
         </MotionDiv>
       </div>
-      <Suspense fallback={<p>Loading...</p>}>
-        <ShowMore country={country} />
-      </Suspense>
+      <div className="flex select-none flex-col">
+        <div className="flex self-end lg:hidden">
+          <Share country={country} />
+        </div>
+        <Suspense fallback={<p>Loading...</p>}>
+          <ShowMore country={country} />
+        </Suspense>
+      </div>
     </div>
   );
 }

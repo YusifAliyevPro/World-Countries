@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Pagination } from "@nextui-org/pagination";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function PaginationUI({ pageQuery, searchQuery, count }) {
@@ -15,7 +15,7 @@ export default function PaginationUI({ pageQuery, searchQuery, count }) {
         `/${searchQuery !== undefined ? "?search=" + searchQuery : ""}`,
         {
           scroll: false,
-        },
+        }
       );
     } else if (page > total) {
       router.push(
@@ -24,7 +24,7 @@ export default function PaginationUI({ pageQuery, searchQuery, count }) {
         }page=${total}`,
         {
           scroll: false,
-        },
+        }
       );
     } else {
       router.push(
@@ -33,7 +33,7 @@ export default function PaginationUI({ pageQuery, searchQuery, count }) {
         }page=${page}`,
         {
           scroll: false,
-        },
+        }
       );
     }
   }, [page, router]);

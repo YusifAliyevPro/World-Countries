@@ -1,3 +1,4 @@
+import Breadcrumb from "@/app/components/breadcrumb";
 import Country from "@/app/components/country";
 import CountrySkeleton from "@/app/components/countrySkeleton";
 import { baseURL } from "@/app/lib/bases";
@@ -114,6 +115,10 @@ export default async function CountryPage({ params }) {
   }
   return (
     <main>
+      <Breadcrumb
+        countryCCA3={countryData.cca3}
+        countryName={countryData.name.common}
+      />
       <Suspense fallback={<CountrySkeleton />}>
         <Country country={countryData} />
       </Suspense>
