@@ -27,7 +27,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
-/public/ads.tx
+/public/ads.txt
 
 # vercel
 .vercel
