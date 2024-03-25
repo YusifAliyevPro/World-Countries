@@ -17,7 +17,7 @@ export default function MapModal({ country, ButtonText, mapOrCoat }) {
     <div>
       <p
         onClick={onOpen}
-        className=" text-md select-none w-fit text-blue-500 hover:text-blue-600 cursor-pointer font-bold"
+        className=" text-md underline select-none w-fit text-blue-500 hover:text-blue-600 cursor-pointer font-bold"
       >
         {ButtonText}
       </p>

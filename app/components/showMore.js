@@ -19,15 +19,16 @@ export default function ShowMore({ country }) {
       }}
       className="mb-10 w-full sm:w-3/5"
     >
-      <Accordion hideIndicator>
+      <Accordion>
         <AccordionItem
           classNames={{
-            title: " font-bold hover:text-gray-600",
+            title: " font-bold hover:text-blue-600 text-blue-500",
+            indicator: " text-blue-600 font-bold text-2xl",
+            heading: " w-fit",
           }}
           key="1"
-          aria-label="Show More"
-          className="showmore"
-          title="Show More"
+          aria-label="More Info"
+          title="More Info"
         >
           <div className=" flex-col text-base sm:flex-row flex justify-between">
             <div className="flex flex-col mb-10 gap-y-1 sm:gap-y-2">
