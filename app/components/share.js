@@ -55,13 +55,13 @@ export default function Share({ country }) {
     country.flag +
     " **Country Name:** " +
     country.name.common +
-    "\n\n💼 **Official Name:** " +
+    "\n\n📄 **Official Name:** " +
     country.name.official +
     "\n\n🏛️ **Capital:** " +
     (country.capital ? country.capital.join(", ") : "No Capital City") +
     "\n\n👩‍👩‍👧‍👦 **Population:** " +
     country.population.toLocaleString("en") +
-    "\n\n🗺️ **Region:** " +
+    "\n\n🌍 **Region:** " +
     (country.subregion ? country.subregion : "No Information") +
     "\n\n💵 **Currency:** " +
     (country.currencies ? Object.values(country.currencies)[0].name : "") +
@@ -79,13 +79,13 @@ export default function Share({ country }) {
     country.flag +
     " Country Name: " +
     country.name.common +
-    "\n\n💼 Official Name: " +
+    "\n\n📄 Official Name: " +
     country.name.official +
     "\n\n🏛️ Capital: " +
     (country.capital ? country.capital.join(", ") : "No Capital City") +
     "\n\n👩‍👩‍👧‍👦 Population: " +
     country.population.toLocaleString("en") +
-    "\n\n🗺️ Region: " +
+    "\n\n🌍 Region: " +
     (country.subregion ? country.subregion : "No Information") +
     "\n\n💵 Currency: " +
     (country.currencies ? Object.values(country.currencies)[0].name : "") +

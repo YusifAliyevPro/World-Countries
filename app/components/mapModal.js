@@ -38,7 +38,7 @@ export default function MapModal({ country, ButtonText, mapOrCoat }) {
                       height={500}
                       width={600}
                       mode="place"
-                      zoom="4"
+                      zoom="5"
                       q={`${country.latlng[0]},${country.latlng[1]}`}
                     />
                   ) : (
