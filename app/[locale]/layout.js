@@ -8,7 +8,13 @@ import "react-icons/fa";
 import Footer from "./components/footer";
 import { Toaster } from "react-hot-toast";
 import { baseURL } from "./lib/bases";
-
+import {
+  NextIntlClientProvider,
+  useLocale,
+  useMessages,
+  useNow,
+  useTimeZone,
+} from "next-intl";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -66,9 +72,13 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children, params }) {
+  const locale = params.locale;
+  const now = useNow();
+  const timeZone = useTimeZone();
+  const messages = useMessages();
   return (
-    <html lang="en" className="bg-white text-black scroll-smooth light">
+    <html lang={locale} className="bg-white text-black scroll-smooth light">
       <head>
         <meta
           name="google-site-verification"
@@ -76,21 +86,28 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={inter.className}>
-        <Toaster
-          toastOptions={{
-            className: "",
-            style: {
-              border: "1px solid #007bff",
-              color: "#000",
-            },
-          }}
-          position="bottom-right"
-        />
-        <Header />
-        <Providers>
-          <main className=" flex min-h-screen flex-col ">{children}</main>
-        </Providers>
-        <Footer />
+        <NextIntlClientProvider
+          locale={locale}
+          now={now}
+          timeZone={timeZone}
+          messages={messages}
+        >
+          <Toaster
+            toastOptions={{
+              className: "",
+              style: {
+                border: "1px solid #007bff",
+                color: "#000",
+              },
+            }}
+            position="bottom-right"
+          />
+          <Header locale={locale} />
+          <Providers>
+            <main className=" flex min-h-screen flex-col ">{children}</main>
+          </Providers>
+          <Footer />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

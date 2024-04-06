@@ -7,29 +7,34 @@ import Search from "./components/search";
 import SearchSkeleton from "./components/searchSkeleton";
 import { baseURL } from "./lib/bases";
 import { MotionDiv } from "./components/motionDiv";
+import { getTranslations } from "next-intl/server";
 
-const ogImage = [
-  {
-    url: `${baseURL}/World-countriess.png`,
-    width: 1400,
-    height: 1080,
-    alt: "World Countriess",
-  },
-];
+export async function generateMetadata({ params }) {
+  const locale = params.locale;
+  const t = await getTranslations({ locale, namespace: "Home.MetaData" });
+  return {
+    title: `${t("title")} | World Countriess`,
+    url: `${baseURL}/${locale}`,
+    alternates: {
+      canonical: `${baseURL}/`,
+      languages: {
+        "en-US": `${baseURL}/en`,
+        "en-GB": `${baseURL}/en`,
+        "az-AZ": `${baseURL}/az`,
+      },
+    },
+    openGraph: {
+      title: `${t("title")} | World Countriess`,
+      url: `${baseURL}/${locale}`,
+    },
+  };
+}
 
-export const metadata = {
-  title: "Home | World Countriess",
-  openGraph: {
-    title: `Home | World Countriess`,
-    images: ogImage,
-  },
-};
-
-export default async function Home({ searchParams }) {
+export default async function Home({ searchParams, params }) {
   async function getData() {
     const query = search
-      ? `https://restcountries.com/v3.1/name/${search}?fields=name,flags,translations,capital,region,population,cca3`
-      : `https://restcountries.com/v3.1/all?fields=name,flags,translations,capital,region,population,cca3`;
+      ? `https://restcountries.com/v3.1/name/${search}?fields=name,flags,translations,capital,region,population,cca3,cca2`
+      : `https://restcountries.com/v3.1/all?fields=name,flags,translations,capital,region,population,cca3,cca2`;
     const data = await fetch(
       query,
       { cache: "force-cache" },
@@ -47,6 +52,7 @@ export default async function Home({ searchParams }) {
   const resultCount = Number(
     countries.length !== undefined ? countries.length : 0
   );
+  const locale = params.locale;
   return (
     <main className="mb-10 mt-12">
       <Suspense fallback={<SearchSkeleton />}>
@@ -74,7 +80,7 @@ export default async function Home({ searchParams }) {
           }}
         >
           {resultCount !== 0 ? (
-            <Countries countries={countries} page={page} />
+            <Countries countries={countries} locale={locale} page={page} />
           ) : (
             ""
           )}

@@ -3,17 +3,18 @@ import ShowMore from "./showMore";
 import { MotionDiv } from "./motionDiv";
 import { MotionH1 } from "./motionH1";
 import { Suspense } from "react";
-import Breadcrumb from "./breadcrumb";
 import Share from "./share";
+import { getTranslations } from "next-intl/server";
+import countries from "i18n-iso-countries";
 
-export default async function Country({ country }) {
+export default async function Country({ country, locale }) {
   const borderCountryCodes = country.borders;
   const searchQuery = `alpha?codes=${
     borderCountryCodes ? borderCountryCodes.join(",") : ""
   }`;
 
   async function getData() {
-    const query = `https://restcountries.com/v3.1/${searchQuery}&fields=name,cca3`;
+    const query = `https://restcountries.com/v3.1/${searchQuery}&fields=name,cca3,cca2`;
     const data = await fetch(
       query,
       { cache: "force-cache" },
@@ -22,6 +23,7 @@ export default async function Country({ country }) {
     return data;
   }
   const borderCountries = await getData();
+  const t = await getTranslations("Country");
 
   return (
     <div className="relative mx-6 mt-5 flex flex-col sm:mx-16">
@@ -34,7 +36,7 @@ export default async function Country({ country }) {
             title={country.name.common}
             className="mt-8 text-4xl w-fit sm:text-nowrap font-bold sm:mt-0"
           >
-            {country.name.common}
+            {countries.getName(country.cca3, locale) || country.name.common}
           </MotionH1>
           <MotionDiv
             initial={{ opacity: 0, y: -30 }}
@@ -44,7 +46,7 @@ export default async function Country({ country }) {
           >
             <div className="flex flex-col gap-y-1 sm:gap-y-2">
               <p className="mt-12 font-bold">
-                Native Name:{" "}
+                {t("nativeName")}{" "}
                 <span className="font-normal">
                   {country.name.nativeName
                     ? Object.values(country.name.nativeName)[0].common
@@ -52,10 +54,14 @@ export default async function Country({ country }) {
                 </span>
               </p>
               <p className="font-bold">
-                Region: <span className="font-normal">{country.region}</span>
+                {t("region")}{" "}
+                <span className="font-normal">
+                  {t(`Continents.${country.region.toLowerCase()}`) ||
+                    country.region}
+                </span>
               </p>
               <p className="font-bold truncate sm:max-w-[250px]">
-                Capital:{" "}
+                {t("capital")}{" "}
                 <span
                   title={country.capital ? country.capital.join(", ") : ""}
                   className="font-normal"
@@ -64,7 +70,7 @@ export default async function Country({ country }) {
                 </span>
               </p>
               <p className="font-bold">
-                Currencies:{" "}
+                {t("currencies")}{" "}
                 <span className="font-normal">
                   {country.currencies
                     ? Object.values(country.currencies)[0].name
@@ -79,17 +85,17 @@ export default async function Country({ country }) {
             </div>
             <div className="mb-8 flex flex-col gap-y-2">
               <p className="mt-12 font-bold">
-                Population:{" "}
+                {t("population")}{" "}
                 <span className="font-normal">
-                  {country.population.toLocaleString("en")}
+                  {country.population.toLocaleString(locale)}
                 </span>
               </p>
               <p className="font-bold">
-                Sub Region:{" "}
+                {t("subRegion")}{" "}
                 <span className="font-normal">{country.subregion}</span>
               </p>
               <p className="font-bold sm:truncate sm:max-w-[230px]">
-                Top Level Domain:{" "}
+                {t("topLevelDomain")}{" "}
                 <span
                   title={
                     country.tld ? Object.values(country.tld).join(", ") : ""
@@ -101,7 +107,7 @@ export default async function Country({ country }) {
                 </span>
               </p>
               <p className="font-bold sm:truncate sm:max-w-[200px]">
-                Languages:{" "}
+                {t("languages")}{" "}
                 <span
                   title={
                     country.languages
@@ -125,7 +131,9 @@ export default async function Country({ country }) {
               transition={{ duration: 0.8, delay: 2.8, type: "spring" }}
               className="relative flex flex-col items-start sm:mb-auto sm:mr-6 sm:max-w-[700px] sm:flex-row sm:items-center"
             >
-              <p className="mr-2 text-wrap font-bold">Border Countries: </p>
+              <p className="mr-2 text-wrap font-bold">
+                {t("borderCountries")}{" "}
+              </p>
               <div className="relative mt-6 flex flex-row flex-wrap gap-2 sm:mr-5 sm:mt-auto">
                 {borderCountries.map((country, index) => (
                   <Link
@@ -133,7 +141,10 @@ export default async function Country({ country }) {
                     href={`/countries/${country.cca3}`}
                     className=" flex-1 select-none text-nowrap rounded-lg border-1 border-solid p-2 text-center hover:border-black hover:text-neutral-600 sm:flex-none"
                   >
-                    <p className="font-normal">{country.name.common}</p>
+                    <p className="font-normal">
+                      {countries.getName(country.cca3, locale) ||
+                        country.name.common}
+                    </p>
                   </Link>
                 ))}
               </div>
@@ -159,13 +170,13 @@ export default async function Country({ country }) {
             className=" select-none object-cover h-auto drop-shadow-2xl shadow-large rounded-md"
           />
           <div className="hidden lg:flex">
-            <Share country={country} />
+            <Share country={country} locale={locale} />
           </div>
         </MotionDiv>
       </div>
       <div className="flex select-none flex-col">
         <div className="flex self-end lg:hidden">
-          <Share country={country} />
+          <Share country={country} locale={locale} />
         </div>
         <Suspense fallback={<p>Loading...</p>}>
           <ShowMore country={country} />

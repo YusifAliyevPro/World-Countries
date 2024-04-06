@@ -12,9 +12,12 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { FcGlobe } from "react-icons/fc";
+import LanguageSwitcher from "./languageSwitcher";
+import { useTranslations } from "next-intl";
 
-export default function Header() {
+export default function Header({ locale }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const t = useTranslations("Header");
   return (
     <Navbar
       className="select-none"
@@ -25,7 +28,7 @@ export default function Header() {
       <NavbarContent>
         <NavbarBrand>
           <Link
-            href="/"
+            href={`/${locale}/`}
             className="relative left-0 flex flex-row items-center gap-1.5 text-xl font-bold"
           >
             <FcGlobe className=" text-3xl font-normal text-blue-600" />
@@ -38,38 +41,44 @@ export default function Header() {
           <Link
             color="foreground"
             className="hover: hidden text-lg font-bold text-slate-700 hover:text-black sm:flex"
-            href="/"
+            href={`/${locale}/`}
             aria-current="page"
           >
-            Home Page
+            {t("homePage")}
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link
             color="foreground"
             className="hover: hidden text-lg font-bold text-slate-700 hover:text-black sm:flex"
-            href="/about"
+            href={`/${locale}/about`}
             aria-current="page"
           >
-            About
+            {t("about")}
           </Link>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem>
-          <div className="hidden">hello</div>
+        <NavbarItem className="hidden lg:flex">
+          <LanguageSwitcher locale={locale} />
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu className="max-h-[200px] items-center justify-center gap-3 overflow-hidden bg-gray-100/90 backdrop-blur-md ">
         <NavbarMenuItem key={1}>
-          <Link href="/" className={` w-full text-xl font-bold`}>
-            Home Page
+          <Link href={`/${locale}/`} className={` w-full text-xl font-bold`}>
+            {t("homePage")}
           </Link>
         </NavbarMenuItem>
         <NavbarMenuItem key={2}>
-          <Link href="/about" className={` w-full text-xl font-bold`}>
-            About
+          <Link
+            href={`/${locale}/about`}
+            className={` w-full text-xl font-bold`}
+          >
+            {t("about")}
           </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <LanguageSwitcher locale={locale} />
         </NavbarMenuItem>
       </NavbarMenu>
       <NavbarMenuToggle

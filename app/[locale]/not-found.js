@@ -1,17 +1,25 @@
 import { Suspense } from "react";
 import LottieComponent from "./components/LottieAnimation";
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
-export const metadata = {
-  title: "404 Not Found",
-  description: " The page you're looking for was not found",
-  creator: "YusifAliyevPro",
-  siteName: "World Countries",
-  openGraph: {
-    description: " The page you're looking for was not found",
-  },
-};
+export async function generateMetadata({ params }) {
+  const locale = params.locale;
+  const t = await getTranslations({ locale, namespace: "NotFound" });
+  return {
+    title: t("title"),
+    description: t("notFoundMessage"),
+    creator: "YusifAliyevPro",
+    siteName: "World Countries",
+    openGraph: {
+      title: t("title"),
+      description: t("notFoundMessage"),
+    },
+  };
+}
 
 export default function NotFound() {
+  const t = useTranslations("NotFound");
   return (
     <div className="relative mt-10 flex w-full flex-col items-center justify-center">
       <div className="relative mx-3 min-h-[240px] sm:min-h-[420px] flex h-full flex-col sm:mt-3">
@@ -22,7 +30,7 @@ export default function NotFound() {
         </Suspense>
       </div>
       <h1 className="relative mx-7 mt-4 text-center text-2xl font-bold sm:text-3xl">
-        The page you&apos;re looking for was not found
+        {t("notFoundMessage")}
       </h1>
     </div>
   );

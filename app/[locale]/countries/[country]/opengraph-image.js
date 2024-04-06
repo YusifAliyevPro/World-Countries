@@ -7,7 +7,7 @@ export async function getData({ params }) {
   const data = await fetch(
     query,
     { cache: "force-cache" },
-    { next: { revalidate: 3600 } }
+    { next: { revalidate: 3600 } },
   ).then((res) => res.json());
   return data[0];
 }
@@ -22,7 +22,7 @@ export const contentType = "image/png";
 export default async function Image({ params }) {
   const country = await getData({ params });
   const interSemiBold = fetch(
-    new URL("/public/fonts/Inter-Bold.ttf", import.meta.url)
+    new URL("/public/fonts/Inter-Bold.ttf", import.meta.url),
   ).then((res) => res.arrayBuffer());
 
   return new ImageResponse(
@@ -55,6 +55,6 @@ export default async function Image({ params }) {
       height: 600,
       width: 1200,
       alt: `${country.flags.alt} | World Countriess`,
-    }
+    },
   );
 }

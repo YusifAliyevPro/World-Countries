@@ -1,8 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MotionDiv } from "./motionDiv";
+import { useTranslations } from "next-intl";
+import countriesTranslation from "i18n-iso-countries";
 
-export default function Countries({ countries, page }) {
+export default function Countries({ countries, page, locale }) {
+  const t = useTranslations("Country");
   const startIndex = (page - 1) * 42;
   const endIndex = startIndex + 42;
   const sortedCountries =
@@ -23,7 +26,7 @@ export default function Countries({ countries, page }) {
         >
           <Link
             href={`/countries/${country.cca3}`}
-            className="justify-content-center relative mt-10 inline-block w-[325px] select-none items-center justify-center rounded-xl bg-gray-200 text-center"
+            className="justify-content-center relative mt-10 inline-block w-[325px] select-none shadow-medium items-center justify-center rounded-xl bg-gray-200 text-center"
           >
             <div className="relative">
               <Image
@@ -31,21 +34,25 @@ export default function Countries({ countries, page }) {
                 height={180}
                 width={325}
                 alt={country.flags.alt}
-                className="h-[185px] w-full rounded-t-md object-cover"
+                className="h-[185px] w-full rounded-t-xl object-cover"
               />
             </div>
             <p className="my-3 ml-8 mr-6 truncate text-left text-2xl font-bold text-black">
-              {country.name.common}
+              {countriesTranslation.getName(country.cca3, locale) ||
+                country.name.common}
             </p>
             <p className="text-md my-3 ml-8  text-left text-slate-900">
-              <span className="font-bold">Capital: </span> {country.capital}
+              <span className="font-bold">{t("capital")} </span>{" "}
+              {country.capital}
             </p>
             <p className="text-md my-3 ml-8  text-left text-slate-900">
-              <span className="font-bold">Region: </span> {country.region}
+              <span className="font-bold">{t("region")} </span>{" "}
+              {t(`Continents.${country.region.toLowerCase()}`) ||
+                country.region}
             </p>
             <p className="text-md my-3 ml-8  text-left text-slate-900">
-              <span className="font-bold">Population: </span>{" "}
-              {country.population.toLocaleString("en")}
+              <span className="font-bold">{t("population")} </span>{" "}
+              {country.population.toLocaleString(locale)}
             </p>
           </Link>
         </MotionDiv>

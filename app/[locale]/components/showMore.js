@@ -4,9 +4,11 @@ import { Accordion, AccordionItem } from "@nextui-org/react";
 import MapModal from "./mapModal";
 import { useRouter } from "next/navigation";
 import { MotionDiv } from "./motionDiv";
+import { useTranslations } from "next-intl";
 
 export default function ShowMore({ country }) {
   const router = useRouter();
+  const t = useTranslations("Country.MoreInfo");
   return (
     <MotionDiv
       initial={{ opacity: 0, y: -30 }}
@@ -27,24 +29,27 @@ export default function ShowMore({ country }) {
             heading: " w-fit",
           }}
           key="1"
-          aria-label="More Info"
-          title="More Info"
+          aria-label={t("moreInfo")}
+          title={t("moreInfo")}
         >
           <div className=" flex-col text-base sm:flex-row flex justify-between">
             <div className="flex flex-col mb-10 gap-y-1 sm:gap-y-2">
               <p className="font-bold">
-                Official Name:{" "}
+                {t("officialName")}{" "}
                 <span className="font-normal">{country.name.official}</span>
               </p>
               <p className="font-bold text-nowrap">
-                Is country independent:{" "}
+                {t("isCountryIndependent")}{" "}
                 <span className="font-normal">
-                  {country.independent ? "Yes" : "No"}
+                  {country.independent ? t("yes") : t("no")}
                 </span>
               </p>
               <p className="font-bold">
-                Timezones:{" "}
-                <span className="font-normal">
+                {t("timezones")}{" "}
+                <span
+                  title={country.timezones}
+                  className="font-normal line-clamp-1"
+                >
                   {country.timezones.map((timezone, index) => (
                     <span className="" key={index}>
                       {index > 0 && ", "}
@@ -56,41 +61,37 @@ export default function ShowMore({ country }) {
             </div>
             <div className=" flex flex-col gap-y-2">
               <p className=" font-bold">
-                Traffic:{" "}
+                {t("traffic")}{" "}
                 <span className="font-normal">
                   {country.car.side === "right"
-                    ? "Right-hand traffic"
-                    : "Left-hand traffic"}
+                    ? t("rightHand")
+                    : t("leftHand")}
                 </span>
               </p>
               <p className="font-bold text-nowrap">
-                Is country landlocked:{" "}
+                {t("isCountryLandlocked")}{" "}
                 <span className="font-normal">
-                  {country.landlocked ? "Yes" : "No"}
+                  {country.landlocked ? t("yes") : t("no")}
                 </span>
               </p>
-              <p className="mr-5 font-bold">
-                Member{" "}
-                <abbr title="United Nations" className=" no-underline">
-                  UN
-                </abbr>
-                :{" "}
+              <p title={t("unAbbr")} className="mr-5 font-bold">
+                {t("memberUN")}:{" "}
                 <span className="font-normal">
                   {" "}
-                  {country.unMember ? "Yes" : "No"}
+                  {country.unMember ? t("yes") : t("no")}
                 </span>
               </p>
             </div>
           </div>
-          <div className="flex flex-col gap-y-5 sm:gap-y-0 mt-8 sm:mt-0 sm:flex-row justify-between">
+          <div className="flex flex-col sm:gap-y-0 mt-8 sm:mt-0 sm:flex-row justify-between">
             <MapModal
               country={country}
-              ButtonText="Click to show on Map"
+              ButtonText={t("showOnMap")}
               mapOrCoat="map"
             />
             <MapModal
               country={country}
-              ButtonText="Click to show Coat of Army"
+              ButtonText={t("showCoatOfArmy")}
               mapOrCoat="coat"
             />
           </div>
