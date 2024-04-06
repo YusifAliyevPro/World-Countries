@@ -73,6 +73,7 @@
       "preparing": "Hazırlanır...",
       "copied": "Kopyalandı",
       "shareText": "{flag} {s}Ölkə adı:{s} {country}\n\n📄 {s}Rəsmi adı:{s} {officialName}\n\n🏛️ {s}Paytaxt:{s} {capital}\n\n👩‍👩‍👧‍👦 {s}Əhali:{s} {population}\n\n🌍 {s}Region:{s} {region}\n\n💵 {s}Valyuta:{s} {currency}\n\n🆓 {s}Ölkə müstəqildir?:{s} {independent}\n\n {s}{country} haqqında ətraflı məlumat üçün linkə keçid edin{s} ⬇️\n\n{baseURL}{pathname}"
-    }
+    },
+    "MetaData": {}
   }
 }

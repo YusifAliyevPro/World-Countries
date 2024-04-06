@@ -83,7 +83,7 @@ export default function ShowMore({ country }) {
               </p>
             </div>
           </div>
-          <div className="flex flex-col sm:gap-y-0 mt-8 sm:mt-0 sm:flex-row justify-between">
+          <div className="flex flex-col sm:gap-y-0 gap-y-4 mt-8 sm:mt-0 sm:flex-row justify-between">
             <MapModal
               country={country}
               ButtonText={t("showOnMap")}
