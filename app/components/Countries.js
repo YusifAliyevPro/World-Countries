@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MotionDiv } from "./motionDiv";
-import { useTranslations } from "next-intl";
+import { Motion } from "./Motion";
 import countriesTranslation from "i18n-iso-countries";
+import { getScopedI18n } from "@/locales/server";
 
-export default function Countries({ countries, page, locale }) {
-  const t = useTranslations("Country");
+export default async function Countries({ countries, page, locale }) {
+  const t = await getScopedI18n("Country");
   const startIndex = (page - 1) * 42;
   const endIndex = startIndex + 42;
   const sortedCountries =
@@ -18,14 +18,14 @@ export default function Countries({ countries, page, locale }) {
   return (
     <div className="justify-content-center mx-4 flex flex-wrap items-center justify-center gap-x-10">
       {sortedCountries.map((country, index) => (
-        <MotionDiv
+        <Motion
           initial={{ scale: 1 }}
           whileHover={{ scale: 1.1 }}
           key={index}
           transition={{ type: "spring", stiffness: 120, duration: 0.6 }}
         >
           <Link
-            href={`/countries/${country.cca3}`}
+            href={`/countries/${country.cca3.toLowerCase()}`}
             className="justify-content-center relative mt-10 inline-block w-[325px] select-none shadow-medium items-center justify-center rounded-xl bg-gray-200 text-center"
           >
             <div className="relative">
@@ -55,7 +55,7 @@ export default function Countries({ countries, page, locale }) {
               {country.population.toLocaleString(locale)}
             </p>
           </Link>
-        </MotionDiv>
+        </Motion>
       ))}
     </div>
   );

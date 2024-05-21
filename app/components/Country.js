@@ -1,11 +1,11 @@
 import Link from "next/link";
-import ShowMore from "./showMore";
-import { MotionDiv } from "./motionDiv";
-import { MotionH1 } from "./motionH1";
+import ShowMore from "./ShowMore";
 import { Suspense } from "react";
-import Share from "./share";
-import { getTranslations } from "next-intl/server";
+import Share from "./Share";
 import countries from "i18n-iso-countries";
+import { getScopedI18n } from "@/locales/server";
+import { Motion } from "./Motion";
+import { I18nProviderClient } from "@/locales/client";
 
 export default async function Country({ country, locale }) {
   const borderCountryCodes = country.borders;
@@ -23,13 +23,14 @@ export default async function Country({ country, locale }) {
     return data;
   }
   const borderCountries = await getData();
-  const t = await getTranslations("Country");
+  const t = await getScopedI18n("Country");
 
   return (
     <div className="relative mx-6 mt-5 flex flex-col sm:mx-16">
       <div className="relative flex w-full mb-12 flex-col-reverse justify-between sm:flex-row ">
         <div className="items-left relative sm:max-w-[50%] ml-3 flex flex-col text-left text-lg">
-          <MotionH1
+          <Motion
+            type="h1"
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.4, type: "spring" }}
@@ -37,8 +38,8 @@ export default async function Country({ country, locale }) {
             className="mt-8 text-4xl w-fit sm:text-nowrap font-bold sm:mt-0"
           >
             {countries.getName(country.cca3, locale) || country.name.common}
-          </MotionH1>
-          <MotionDiv
+          </Motion>
+          <Motion
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 2.2, type: "spring" }}
@@ -123,9 +124,9 @@ export default async function Country({ country, locale }) {
                 </span>
               </p>
             </div>
-          </MotionDiv>
+          </Motion>
           {borderCountries.status !== 400 ? (
-            <MotionDiv
+            <Motion
               initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 2.8, type: "spring" }}
@@ -148,12 +149,12 @@ export default async function Country({ country, locale }) {
                   </Link>
                 ))}
               </div>
-            </MotionDiv>
+            </Motion>
           ) : (
             ""
           )}
         </div>
-        <MotionDiv
+        <Motion
           initial={{ opacity: 0, y: -600 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
@@ -170,17 +171,27 @@ export default async function Country({ country, locale }) {
             className=" select-none object-cover h-auto drop-shadow-2xl shadow-large rounded-md"
           />
           <div className="hidden lg:flex">
-            <Share country={country} locale={locale} />
+            <I18nProviderClient locale={locale}>
+              <Suspense fallback={<p>Loading...</p>}>
+                <Share country={country} locale={locale} />
+              </Suspense>
+            </I18nProviderClient>
           </div>
-        </MotionDiv>
+        </Motion>
       </div>
       <div className="flex select-none flex-col">
         <div className="flex self-end lg:hidden">
-          <Share country={country} locale={locale} />
+          <I18nProviderClient locale={locale}>
+            <Suspense fallback={<p>Loading...</p>}>
+              <Share country={country} locale={locale} />
+            </Suspense>
+          </I18nProviderClient>
         </div>
-        <Suspense fallback={<p>Loading...</p>}>
-          <ShowMore country={country} />
-        </Suspense>
+        <I18nProviderClient locale={locale}>
+          <Suspense fallback={<p>Loading...</p>}>
+            <ShowMore country={country} />
+          </Suspense>
+        </I18nProviderClient>
       </div>
     </div>
   );

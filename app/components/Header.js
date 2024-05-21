@@ -12,12 +12,12 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { FcGlobe } from "react-icons/fc";
-import LanguageSwitcher from "./languageSwitcher";
-import { useTranslations } from "next-intl";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useScopedI18n } from "@/locales/client";
 
 export default function Header({ locale }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const t = useTranslations("Header");
+  const t = useScopedI18n("Header");
   return (
     <Navbar
       className="select-none"

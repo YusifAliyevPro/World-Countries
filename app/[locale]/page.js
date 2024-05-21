@@ -1,36 +1,43 @@
 import { Suspense } from "react";
-import Countries from "./components/countries";
-import PaginationUI from "./components/pagination";
-import PaginationSkeleton from "./components/paginationSkeleton";
-import CountriesSkeleton from "./components/countriesSkeleton";
-import Search from "./components/search";
-import SearchSkeleton from "./components/searchSkeleton";
-import { baseURL } from "./lib/bases";
-import { MotionDiv } from "./components/motionDiv";
-import { getTranslations } from "next-intl/server";
+import Countries from "@/app/components/Countries";
+import PaginationUI from "@/app/components/Pagination";
+import PaginationSkeleton from "@/app/components/PaginationSkeleton";
+import CountriesSkeleton from "@/app/components/CountriesSkeleton";
+import Search from "@/app/components/Search";
+import SearchSkeleton from "@/app/components/SearchSkeleton";
+import { getScopedI18n, getStaticParams } from "@/locales/server";
+import { Motion } from "../components/Motion";
+import { I18nProviderClient } from "@/locales/client";
+import { setStaticParamsLocale } from "next-international/server";
 
 export async function generateMetadata({ params }) {
   const locale = params.locale;
-  const t = await getTranslations({ locale, namespace: "Home.MetaData" });
+  const t = await getScopedI18n("Home.MetaData");
   return {
     title: `${t("title")} | World Countriess`,
-    url: `${baseURL}/${locale}`,
+    url: `/${locale}`,
     alternates: {
-      canonical: `${baseURL}/`,
+      canonical: `/`,
       languages: {
-        "en-US": `${baseURL}/en`,
-        "en-GB": `${baseURL}/en`,
-        "az-AZ": `${baseURL}/az`,
+        "en-US": `/en`,
+        "en-GB": `/en`,
+        "az-AZ": `/az`,
       },
     },
     openGraph: {
       title: `${t("title")} | World Countriess`,
-      url: `${baseURL}/${locale}`,
+      url: `/${locale}`,
     },
   };
 }
 
+export function generateStaticParams() {
+  return getStaticParams();
+}
+
 export default async function Home({ searchParams, params }) {
+  const locale = params.locale;
+  setStaticParamsLocale(locale);
   async function getData() {
     const query = search
       ? `https://restcountries.com/v3.1/name/${search}?fields=name,flags,translations,capital,region,population,cca3,cca2`
@@ -52,16 +59,17 @@ export default async function Home({ searchParams, params }) {
   const resultCount = Number(
     countries.length !== undefined ? countries.length : 0
   );
-  const locale = params.locale;
   return (
     <main className="mb-10 mt-12">
-      <Suspense fallback={<SearchSkeleton />}>
-        <Search
-          resultCount={resultCount}
-          searchQuery={search}
-          pageQuery={page}
-        />
-      </Suspense>
+      <I18nProviderClient locale={locale}>
+        <Suspense fallback={<SearchSkeleton />}>
+          <Search
+            resultCount={resultCount}
+            searchQuery={search}
+            pageQuery={page}
+          />
+        </Suspense>
+      </I18nProviderClient>
       <Suspense fallback={<PaginationSkeleton />}>
         <PaginationUI
           count={resultCount}
@@ -70,7 +78,7 @@ export default async function Home({ searchParams, params }) {
         />
       </Suspense>
       <Suspense fallback={<CountriesSkeleton />}>
-        <MotionDiv
+        <Motion
           initial={{ y: 600, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{
@@ -84,7 +92,7 @@ export default async function Home({ searchParams, params }) {
           ) : (
             ""
           )}
-        </MotionDiv>
+        </Motion>
       </Suspense>
       <div className="my-8">
         <Suspense fallback={<PaginationSkeleton />}>

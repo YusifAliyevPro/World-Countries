@@ -1,4 +1,4 @@
-import { baseURL } from "./lib/bases";
+import { baseURL } from "../lib/constants";
 
 export default async function sitemap() {
   async function getData() {
@@ -6,14 +6,14 @@ export default async function sitemap() {
     const data = await fetch(
       query,
       { cache: "force-cache" },
-      { next: { revalidate: 604800 } },
+      { next: { revalidate: 604800 } }
     ).then((res) => res.json());
     return data;
   }
 
   const countriesData = await getData();
   const sortedCountries = countriesData.sort((a, b) =>
-    a.name.common.localeCompare(b.name.common),
+    a.name.common.localeCompare(b.name.common)
   );
 
   const countries = sortedCountries.map((country) => ({

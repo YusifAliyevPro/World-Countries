@@ -1,16 +1,14 @@
 "use client";
 import React from "react";
 import { Accordion, AccordionItem } from "@nextui-org/react";
-import MapModal from "./mapModal";
-import { useRouter } from "next/navigation";
-import { MotionDiv } from "./motionDiv";
-import { useTranslations } from "next-intl";
+import MapModal from "./MapModal";
+import { useScopedI18n } from "@/locales/client";
+import { Motion } from "./Motion";
 
 export default function ShowMore({ country }) {
-  const router = useRouter();
-  const t = useTranslations("Country.MoreInfo");
+  const t = useScopedI18n("Country.MoreInfo");
   return (
-    <MotionDiv
+    <Motion
       initial={{ opacity: 0, y: -30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -97,6 +95,6 @@ export default function ShowMore({ country }) {
           </div>
         </AccordionItem>
       </Accordion>
-    </MotionDiv>
+    </Motion>
   );
 }

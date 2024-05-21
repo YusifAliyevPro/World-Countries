@@ -1,14 +1,15 @@
-import createMiddleware from "next-intl/middleware";
-import { locales } from "./i18n";
+import { createI18nMiddleware } from "next-international/middleware";
 
-export default createMiddleware({
-  // A list of all locales that are supported
-  locales: locales,
+const I18nMiddleware = createI18nMiddleware({
+  locales: ["en", "az"],
   defaultLocale: "en",
-  localeDetection: true,
-  localePrefix: "always",
+  urlMappingStrategy: "redirect",
 });
 
+export function middleware(request) {
+  return I18nMiddleware(request);
+}
+
 export const config = {
-  matcher: ["/", "/((?!api|_next|_vercel|.*\\..*).*)"],
+  matcher: ["/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)"],
 };

@@ -1,23 +1,18 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Providers } from "./components/providers";
-import Header from "./components/header";
+import { Providers } from "../components/Providers";
+import Header from "../components/Header";
 import "react-icons/fc";
 import "react-icons/bi";
 import "react-icons/fa";
-import Footer from "./components/footer";
+import Footer from "../components/Footer";
 import { Toaster } from "react-hot-toast";
-import { baseURL } from "./lib/bases";
-import {
-  NextIntlClientProvider,
-  useLocale,
-  useMessages,
-  useNow,
-  useTimeZone,
-} from "next-intl";
+import { baseURL } from "../../lib/constants";
+import { I18nProviderClient } from "@/locales/client";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
+  metadataBase: new URL(baseURL),
   robots: {
     index: true,
     follow: true,
@@ -57,7 +52,7 @@ export const metadata = {
     "aliyev",
   ],
   creator: "YusifAliyevPro",
-  url: `${baseURL}/`,
+  url: `/`,
   publisher: "YusifAliyevPro",
   applicationName: "World Countriess",
   generator: "World Countriess",
@@ -66,7 +61,7 @@ export const metadata = {
   openGraph: {
     type: "website",
     title: "World Countriess",
-    url: `${baseURL}/`,
+    url: `/`,
     siteName: "World Countriess",
     locale: "en_US",
   },
@@ -74,9 +69,6 @@ export const metadata = {
 
 export default function RootLayout({ children, params }) {
   const locale = params.locale;
-  const now = useNow();
-  const timeZone = useTimeZone();
-  const messages = useMessages();
   return (
     <html lang={locale} className="bg-white text-black scroll-smooth light">
       <head>
@@ -86,28 +78,23 @@ export default function RootLayout({ children, params }) {
         />
       </head>
       <body className={inter.className}>
-        <NextIntlClientProvider
-          locale={locale}
-          now={now}
-          timeZone={timeZone}
-          messages={messages}
-        >
-          <Toaster
-            toastOptions={{
-              className: "",
-              style: {
-                border: "1px solid #007bff",
-                color: "#000",
-              },
-            }}
-            position="bottom-right"
-          />
+        <Toaster
+          toastOptions={{
+            className: "",
+            style: {
+              border: "1px solid #007bff",
+              color: "#000",
+            },
+          }}
+          position="bottom-right"
+        />
+        <I18nProviderClient locale={locale}>
           <Header locale={locale} />
-          <Providers>
-            <main className=" flex min-h-screen flex-col ">{children}</main>
-          </Providers>
-          <Footer />
-        </NextIntlClientProvider>
+        </I18nProviderClient>
+        <Providers>
+          <main className=" flex min-h-screen flex-col ">{children}</main>
+        </Providers>
+        <Footer />
       </body>
     </html>
   );

@@ -1,22 +1,14 @@
-"use client";
 import { Select, SelectItem, Avatar } from "@nextui-org/react";
-import { usePathname, useRouter } from "../../../navigation";
-import { useTranslations } from "next-intl";
-import React, { useEffect, useState } from "react";
-export default function LanguageSwitcher({ locale }) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const t = useTranslations("Header.LanguageSwitcher");
-  const [value, setValue] = useState({ currentKey: locale });
-  const [initialRender, setInitialRender] = useState(true);
+import {
+  useChangeLocale,
+  useCurrentLocale,
+  useScopedI18n,
+} from "@/locales/client";
 
-  useEffect(() => {
-    if (!initialRender) {
-      const key = value.currentKey;
-      router.replace(pathname, { locale: key });
-    }
-    setInitialRender(false);
-  }, [value]);
+export default function LanguageSwitcher() {
+  const t = useScopedI18n("Header.LanguageSwitcher");
+  const locale = useCurrentLocale();
+  const changeLocale = useChangeLocale({ preserveSearchParams: true });
 
   const languages = [
     { key: "az", lang: "Azərbaycanca", flag: "az" },
@@ -28,6 +20,7 @@ export default function LanguageSwitcher({ locale }) {
     <Select
       items={languages}
       className="min-w-[110px]"
+      isRequired
       classNames={{
         trigger: "bg-gray-200",
         popoverContent: "bg-gray-200",
@@ -35,8 +28,8 @@ export default function LanguageSwitcher({ locale }) {
         listbox: "font-bold",
       }}
       aria-label="Language"
+      onSelectionChange={(value) => changeLocale(value.currentKey)}
       selectedKeys={[locale]}
-      onSelectionChange={setValue}
       renderValue={(items) => {
         return items.map((item) => (
           <div key={item.key} className="flex flex-row items-center gap-x-2">

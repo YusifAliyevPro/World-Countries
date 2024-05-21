@@ -19,19 +19,17 @@ import {
   BiSolidShareAlt,
 } from "react-icons/bi";
 import { Snippet } from "@nextui-org/snippet";
-import { baseURL } from "../lib/bases";
-import { MotionDiv } from "./motionDiv";
-import { useTranslations } from "next-intl";
+import { baseURL } from "../../lib/constants";
 import countries from "i18n-iso-countries";
+import { useScopedI18n } from "@/locales/client";
+import { Motion } from "./Motion";
 
 export default function Share({ country, locale }) {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   const pathname = usePathname();
   const router = useRouter();
-  const t = useTranslations("Country.Share");
-  console.log(country.cca2);
+  const t = useScopedI18n("Country.Share");
   const ShareText = (s) => {
-    console.log(locale);
     return t("shareText", {
       s: s,
       flag: country.flag,
@@ -107,7 +105,7 @@ export default function Share({ country, locale }) {
 
   return (
     <div>
-      <MotionDiv
+      <Motion
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{
@@ -126,7 +124,7 @@ export default function Share({ country, locale }) {
           <BiSolidShareAlt className="mt-1 text-2xl" />
           <p className="select-none">{t("share")}</p>
         </Button>
-      </MotionDiv>
+      </Motion>
       <Modal
         isOpen={isOpen}
         placement="center"

@@ -1,25 +1,17 @@
-import Breadcrumb from "../../components/breadcrumb";
-import Country from "../../components/country";
-import CountrySkeleton from "../../components/countrySkeleton";
-import { baseURL } from "../../lib/bases";
+import Breadcrumb from "../../../components/Breadcrumb";
+import Country from "../../../components/Country";
+import CountrySkeleton from "../../../components/CountrySkeleton";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import countries from "i18n-iso-countries";
-import { getTranslations } from "next-intl/server";
-
-export async function getData({ params }) {
-  const query = `https://restcountries.com/v3.1/alpha?codes=${params.country}`;
-  const data = await fetch(
-    query,
-    { cache: "force-cache" },
-    { next: { revalidate: 3600 } }
-  ).then((res) => res.json());
-  return data[0];
-}
+import { getScopedI18n } from "@/locales/server";
+import { I18nProviderClient } from "@/locales/client";
+import { setStaticParamsLocale } from "next-international/server";
+import { getData, getSlugs } from "@/lib/utils";
 
 export async function generateMetadata({ params }) {
   const locale = params.locale;
-  const t = await getTranslations({ locale, namespace: "Country.MetaData" });
+  const t = await getScopedI18n("Country.MetaData");
   const country = await getData({ params });
   if (!country) {
     return notFound();
@@ -27,14 +19,14 @@ export async function generateMetadata({ params }) {
 
   return {
     title: `${country ? country.name.common : "Loading..."}`,
-    url: `${baseURL}/${locale}/countries/${country.cca3}`,
+    url: `/${locale}/countries/${country.cca3}`,
     description: `${country.name.official}`,
     alternates: {
-      canonical: `${baseURL}/countries/${country.cca3}`,
+      canonical: `/countries/${country.cca3}`,
       languages: {
-        "en-US": `${baseURL}/en/countries/${country.cca3}`,
-        "en-GB": `${baseURL}/en/countries/${country.cca3}`,
-        "az-AZ": `${baseURL}/az/countries/${country.cca3}`,
+        "en-US": `/en/countries/${country.cca3}`,
+        "en-GB": `/en/countries/${country.cca3}`,
+        "az-AZ": `/az/countries/${country.cca3}`,
       },
     },
     keywords: [
@@ -57,25 +49,39 @@ export async function generateMetadata({ params }) {
     ],
     openGraph: {
       title: `${country.name.common} | World Countriess`,
-      url: `${baseURL}/${locale}/countries/${country.cca3}`,
+      url: `/${locale}/countries/${country.cca3}`,
       description: `${country.name.official}`,
       type: "website",
     },
   };
 }
 
+export async function generateStaticParams() {
+  const countryData = await getSlugs();
+  const staticParams = countryData.flatMap((country) => [
+    { locale: "az", country: country.cca3.toLowerCase() },
+    { locale: "en", country: country.cca3.toLowerCase() },
+  ]);
+  return staticParams;
+}
+
 export default async function CountryPage({ params }) {
-  const countryData = await getData({ params });
   const locale = params.locale;
+  setStaticParamsLocale(locale);
+  const countryData = await getData({ params });
   if (!countryData) {
     return notFound();
   }
   return (
     <main>
-      <Breadcrumb
-        countryCCA3={countryData.cca3}
-        countryName={countries.getName(countryData.cca2, locale)}
-      />
+      <I18nProviderClient locale={locale}>
+        <Suspense fallback={<p>Loading...</p>}>
+          <Breadcrumb
+            countryCCA3={countryData.cca3}
+            countryName={countries.getName(countryData.cca2, locale)}
+          />
+        </Suspense>
+      </I18nProviderClient>
       <Suspense fallback={<CountrySkeleton />}>
         <Country country={countryData} locale={locale} />
       </Suspense>

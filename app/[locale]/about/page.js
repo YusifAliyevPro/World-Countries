@@ -3,12 +3,10 @@ import { BiLogoTailwindCss } from "react-icons/bi";
 import { FaReact } from "react-icons/fa";
 import { TbApi, TbBrandFramerMotion } from "react-icons/tb";
 import { SiNextdotjs, SiNextui, SiVercel } from "react-icons/si";
-import { MotionH2 } from "../components/motionH2";
-import { MotionP } from "../components/motionP";
-import { MotionDiv } from "../components/motionDiv";
-import { useTranslations } from "next-intl";
-import { getTranslations } from "next-intl/server";
-import { baseURL } from "../lib/bases";
+import { baseURL } from "../../../lib/constants";
+import { getScopedI18n, getStaticParams } from "@/locales/server";
+import { Motion } from "@/app/components/Motion";
+import { setStaticParamsLocale } from "next-international/server";
 
 const ogImage = [
   {
@@ -19,9 +17,8 @@ const ogImage = [
   },
 ];
 
-export async function generateMetadata({ params }) {
-  const locale = params.locale;
-  const t = await getTranslations({ locale, namespace: "About.MetaData" });
+export async function generateMetadata() {
+  const t = await getScopedI18n("About.MetaData");
   return {
     title: t("title"),
     url: "https://world-countriess.vercel.app/about",
@@ -122,12 +119,18 @@ const texts = [
   },
 ];
 
-export default function About() {
-  const t = useTranslations("About");
+export function generateStaticParams() {
+  return getStaticParams();
+}
+
+export default async function About({ params: { locale } }) {
+  setStaticParamsLocale(locale);
+  const t = await getScopedI18n("About");
   return (
     <main className="relative flex items-center sm:mx-0 mx-7 text-center lg:text-left mt-9 lg:mt-0 justify-center ">
       <div className=" rounded-lg p-0 lg:p-12 sm:w-[800px] gap-y-6 flex relative flex-col">
-        <MotionH2
+        <Motion
+          type="h2"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
@@ -139,8 +142,9 @@ export default function About() {
           className="bg-gradient-to-r from-[rgba(0,57,181,1)] from-0% via-[rgba(10,107,222,1)] via-50% to-[rgba(0,130,255,1)] to-100% bg-clip-text  text-center text-3xl font-bold text-transparent lg:mb-2"
         >
           {t("aboutTheProject")}
-        </MotionH2>
-        <MotionP
+        </Motion>
+        <Motion
+          type="p"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
@@ -151,8 +155,9 @@ export default function About() {
           }}
         >
           {t("text1")}
-        </MotionP>
-        <MotionP
+        </Motion>
+        <Motion
+          type="p"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           className="mx-auto flex text-2xl mt-2 font-bold"
@@ -164,10 +169,10 @@ export default function About() {
           }}
         >
           {t("toolsIUsed")}
-        </MotionP>
+        </Motion>
         <div className="flex relative my-8 select-none flex-wrap gap-y-8 sm:flex-row gap-x-8 items-center justify-center">
           {tools.map((tool, index) => (
-            <MotionDiv
+            <Motion
               initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
               key={index}
@@ -187,11 +192,12 @@ export default function About() {
                 {tool.icon && tool.icon}
                 {tool.img && tool.img}
               </Link>
-            </MotionDiv>
+            </Motion>
           ))}
         </div>
         {texts.map((text, index) => (
-          <MotionP
+          <Motion
+            type="p"
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             key={index}
@@ -210,7 +216,7 @@ export default function About() {
             >
               {text.linkText}
             </Link>
-          </MotionP>
+          </Motion>
         ))}
       </div>
     </main>

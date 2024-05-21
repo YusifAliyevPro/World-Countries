@@ -1,12 +1,12 @@
 "use client";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/react";
-import { MotionDiv } from "./motionDiv";
-import { useTranslations } from "next-intl";
+import { useScopedI18n } from "@/locales/client";
+import { Motion } from "./Motion";
 
 export default function Breadcrumb({ countryCCA3, countryName }) {
-  const t = useTranslations("Header");
+  const t = useScopedI18n("Header");
   return (
-    <MotionDiv
+    <Motion
       initial={{ opacity: 0, y: -30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, type: "spring" }}
@@ -18,6 +18,6 @@ export default function Breadcrumb({ countryCCA3, countryName }) {
           {countryName}
         </BreadcrumbItem>
       </Breadcrumbs>
-    </MotionDiv>
+    </Motion>
   );
 }
