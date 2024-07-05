@@ -6,7 +6,7 @@ export default {
   },
   Home: {
     Search: {
-      placeholder: "Ölkə adı ilə axtarın",
+      placeholder: "Ölkə adı və ya Paytaxtı ilə axtarın",
       noResult: "Axtarışınıza uyğun ölkə tapılmadı",
     },
     MetaData: {

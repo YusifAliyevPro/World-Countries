@@ -1,32 +1,22 @@
 "use client";
 import { Input } from "@nextui-org/input";
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 import { useDebounce } from "use-debounce";
 import toast from "react-hot-toast";
 import { BiSearch } from "react-icons/bi";
 import { useScopedI18n } from "@/locales/client";
+import useStore from "@/lib/store";
 
-export default function Search({ searchQuery, resultCount, pageQuery }) {
-  const router = useRouter();
-  const [text, setText] = useState(searchQuery);
-  const [query] = useDebounce(text, 500);
-  const initialRender = useRef(true);
+export default function Search() {
+  const [text, setText] = useState("");
+  const [query] = useDebounce(text, 600);
+  const setSearch = useStore((state) => state.setSearch);
+  const resultCount = useStore((state) => state.resultCount);
   const t = useScopedI18n("Home.Search");
 
   useEffect(() => {
-    if (initialRender.current) {
-      initialRender.current = false;
-      return;
-    }
-    if (!query || query.length < 3) {
-      router.push(`?${pageQuery !== 1 ? "page=" + pageQuery : ""}`);
-    } else {
-      router.push(
-        `?search=${query}${pageQuery !== 1 ? "" : "&page=" + pageQuery}`
-      );
-    }
-  }, [query, router]);
+    setSearch(query);
+  }, [query]);
 
   useEffect(() => {
     if (resultCount === 0) {

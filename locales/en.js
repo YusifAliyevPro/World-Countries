@@ -6,7 +6,7 @@ export default {
   },
   Home: {
     Search: {
-      placeholder: "Search by country name",
+      placeholder: "Search by Country Name or Capital",
       noResult: "No country matching your search was found",
     },
     MetaData: {

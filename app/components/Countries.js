@@ -1,31 +1,59 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { Motion } from "./Motion";
+import { useScopedI18n } from "@/locales/client";
 import countriesTranslation from "i18n-iso-countries";
-import { getScopedI18n } from "@/locales/server";
+import azeLocale from "i18n-iso-countries/langs/az.json";
+import turLocale from "i18n-iso-countries/langs/tr.json";
+import useStore from "@/lib/store";
+import Fuse from "fuse.js";
+import { useEffect } from "react";
 
-export default async function Countries({ countries, page, locale }) {
-  const t = await getScopedI18n("Country");
-  const startIndex = (page - 1) * 42;
-  const endIndex = startIndex + 42;
-  const sortedCountries =
-    countries.status !== 404
-      ? countries
-          .sort((a, b) => a.name.common.localeCompare(b.name.common))
-          .slice(startIndex, endIndex)
-      : [];
+export default function Countries({ countriess, locale }) {
+  countriesTranslation.registerLocale(azeLocale);
+  countriesTranslation.registerLocale(turLocale);
+  const t = useScopedI18n("Country");
+  const search = useStore((state) => state.search);
+  const page = useStore((state) => state.page);
+  const setResultCount = useStore((state) => state.setResultCount);
+  let countries = countriess;
+  countries = countries.map((country) => ({
+    ...country,
+    name: {
+      ...country.name,
+      officialAze: countriesTranslation.getName(country.cca3, "az"),
+    },
+  }));
 
+  let renderedCountries;
+  if (search) {
+    const options = {
+      keys: ["name.common", "name.official", "name.officialAze", "capital"],
+      threshold: 0.4, // Film adı için daha esnek eşleşme
+    };
+    const fuse = new Fuse(countries, options);
+    const result = fuse.search(search);
+    renderedCountries = result.map(({ item }) => item);
+  } else {
+    renderedCountries = countries
+      .sort((a, b) => a.name.common.localeCompare(b.name.common))
+      .slice((page - 1) * 30, page * 30);
+  }
+  useEffect(() => {
+    setResultCount(renderedCountries.length);
+  }, [renderedCountries]);
   return (
     <div className="justify-content-center mx-4 flex flex-wrap items-center justify-center gap-x-10">
-      {sortedCountries.map((country, index) => (
+      {renderedCountries.map((country, index) => (
         <Motion
           initial={{ scale: 1 }}
           whileHover={{ scale: 1.1 }}
-          key={index}
+          key={index + 30 * (page - 1)}
           transition={{ type: "spring", stiffness: 120, duration: 0.6 }}
         >
           <Link
-            href={`/countries/${country.cca3.toLowerCase()}`}
+            href={`/${country.cca3.toLowerCase()}`}
             className="justify-content-center relative mt-10 inline-block w-[325px] select-none shadow-medium items-center justify-center rounded-xl bg-gray-200 text-center"
           >
             <div className="relative">

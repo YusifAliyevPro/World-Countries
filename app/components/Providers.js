@@ -11,7 +11,7 @@ export function Providers({ children }) {
   const reducedMotion = isMobile ? "always" : "never";
   return (
     <NextUIProvider navigate={router.push}>
-      <MotionConfig reducedMotion={reducedMotion}>{children}</MotionConfig>
+      <MotionConfig>{children}</MotionConfig>
     </NextUIProvider>
   );
 }

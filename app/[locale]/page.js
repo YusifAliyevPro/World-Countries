@@ -9,6 +9,7 @@ import { getScopedI18n, getStaticParams } from "@/locales/server";
 import { Motion } from "../components/Motion";
 import { I18nProviderClient } from "@/locales/client";
 import { setStaticParamsLocale } from "next-international/server";
+import { getCountries } from "@/lib/utils";
 
 export async function generateMetadata({ params }) {
   const locale = params.locale;
@@ -35,27 +36,13 @@ export function generateStaticParams() {
   return getStaticParams();
 }
 
-export default async function Home({ searchParams, params }) {
-  const locale = params.locale;
+export default async function Home({ params }) {
+  const { locale } = params;
   setStaticParamsLocale(locale);
-  async function getData() {
-    const query = search
-      ? `https://restcountries.com/v3.1/name/${search}?fields=name,flags,translations,capital,region,population,cca3,cca2`
-      : `https://restcountries.com/v3.1/all?fields=name,flags,translations,capital,region,population,cca3,cca2`;
-    const data = await fetch(
-      query,
-      { cache: "force-cache" },
-      { next: { revalidate: 604800 } }
-    ).then((res) => res.json());
-    return data;
-  }
+  const search = undefined;
+  const page = 1;
 
-  const search =
-    typeof searchParams.search === "string" ? searchParams.search : undefined;
-  const page =
-    typeof searchParams.page === "string" ? Number(searchParams.page) : 1;
-
-  const countries = await getData({ search });
+  const countries = await getCountries();
   const resultCount = Number(
     countries.length !== undefined ? countries.length : 0
   );
@@ -87,22 +74,13 @@ export default async function Home({ searchParams, params }) {
             duration: 1.5,
           }}
         >
-          {resultCount !== 0 ? (
-            <Countries countries={countries} locale={locale} page={page} />
-          ) : (
-            ""
+          {resultCount !== 0 && (
+            <I18nProviderClient locale={locale}>
+              <Countries countriess={countries} locale={locale} page={page} />
+            </I18nProviderClient>
           )}
         </Motion>
       </Suspense>
-      <div className="my-8">
-        <Suspense fallback={<PaginationSkeleton />}>
-          <PaginationUI
-            count={resultCount}
-            searchQuery={search}
-            pageQuery={page}
-          />
-        </Suspense>
-      </div>
     </main>
   );
 }

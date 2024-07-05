@@ -13,7 +13,7 @@ export default function LanguageSwitcher() {
   const languages = [
     { key: "az", lang: "Azərbaycanca", flag: "az" },
     { key: "en", lang: "English", flag: "gb" },
-    /*{ key: "ru", lang: "Russian", flag: "ru" },*/
+    { key: "tr", lang: "Türkçe", flag: "tr" },
   ];
 
   return (

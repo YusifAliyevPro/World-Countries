@@ -1,4 +1,4 @@
-import { baseURL } from "../../lib/constants";
+import { baseURL } from "../lib/constants";
 
 export default function robots() {
   return {
