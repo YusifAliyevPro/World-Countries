@@ -8,9 +8,9 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
-} from "@nextui-org/react";
+} from "@nextui-org/navbar";
 import Link from "next/link";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { FcGlobe } from "react-icons/fc";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useScopedI18n } from "@/locales/client";
@@ -31,7 +31,7 @@ export default function Header({ locale }) {
             href={`/${locale}/`}
             className="relative left-0 flex flex-row items-center gap-1.5 text-xl font-bold"
           >
-            <FcGlobe className=" text-3xl font-normal text-blue-600" />
+            <FcGlobe className="text-3xl font-normal text-blue-600" />
             <p className="font-bold text-black">World Countriess</p>
           </Link>
         </NavbarBrand>
@@ -60,25 +60,29 @@ export default function Header({ locale }) {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
-          <LanguageSwitcher locale={locale} />
+          <Suspense fallback={<p>Loading...</p>}>
+            <LanguageSwitcher locale={locale} />
+          </Suspense>
         </NavbarItem>
       </NavbarContent>
-      <NavbarMenu className="max-h-[200px] items-center justify-center gap-3 overflow-hidden bg-gray-100/90 backdrop-blur-md ">
+      <NavbarMenu className="max-h-[200px] items-center justify-center gap-3 overflow-hidden bg-gray-100/90 backdrop-blur-md">
         <NavbarMenuItem key={1}>
-          <Link href={`/${locale}/`} className={` w-full text-xl font-bold`}>
+          <Link href={`/${locale}/`} className={`w-full text-xl font-bold`}>
             {t("homePage")}
           </Link>
         </NavbarMenuItem>
         <NavbarMenuItem key={2}>
           <Link
             href={`/${locale}/about`}
-            className={` w-full text-xl font-bold`}
+            className={`w-full text-xl font-bold`}
           >
             {t("about")}
           </Link>
         </NavbarMenuItem>
         <NavbarMenuItem>
-          <LanguageSwitcher locale={locale} />
+          <Suspense fallback={<p>Loading...</p>}>
+            <LanguageSwitcher locale={locale} />
+          </Suspense>
         </NavbarMenuItem>
       </NavbarMenu>
       <NavbarMenuToggle

@@ -1,6 +1,5 @@
 import Breadcrumb from "../../../components/Breadcrumb";
 import Country from "../../../components/Country";
-import CountrySkeleton from "../../../components/CountrySkeleton";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import countries from "i18n-iso-countries";
@@ -8,6 +7,7 @@ import { getScopedI18n } from "@/locales/server";
 import { I18nProviderClient } from "@/locales/client";
 import { setStaticParamsLocale } from "next-international/server";
 import { getData, getSlugs } from "@/lib/utils";
+import { CountrySkeleton } from "@/app/components/Skeletons";
 
 export async function generateMetadata({ params }) {
   const locale = params.locale;

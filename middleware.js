@@ -11,7 +11,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: [
-    "/((?!api|static|.*\\..*|_next|favicon.ico|icon.ico|robots.txt).*)",
-  ],
+  matcher: ["/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)"],
 };

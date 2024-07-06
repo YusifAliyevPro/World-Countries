@@ -1,9 +1,10 @@
 "use client";
 import React from "react";
 import { Accordion, AccordionItem } from "@nextui-org/react";
-import MapModal from "./MapModal";
 import { useScopedI18n } from "@/locales/client";
 import { Motion } from "./Motion";
+import CoatofArmy from "./CoatofArmy";
+import MapModal from "./Map";
 
 export default function ShowMore({ country }) {
   const t = useScopedI18n("Country.MoreInfo");
@@ -82,16 +83,8 @@ export default function ShowMore({ country }) {
             </div>
           </div>
           <div className="flex flex-col sm:gap-y-0 gap-y-4 mt-8 sm:mt-0 sm:flex-row justify-between">
-            <MapModal
-              country={country}
-              ButtonText={t("showOnMap")}
-              mapOrCoat="map"
-            />
-            <MapModal
-              country={country}
-              ButtonText={t("showCoatOfArmy")}
-              mapOrCoat="coat"
-            />
+            <MapModal latlng={country.latlng[0]} latlng2={country.latlng[1]} />
+            <CoatofArmy src={country.coatOfArms.svg} alt={country.flags.alt} />
           </div>
         </AccordionItem>
       </Accordion>

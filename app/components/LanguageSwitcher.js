@@ -1,12 +1,7 @@
 import { Select, SelectItem, Avatar } from "@nextui-org/react";
-import {
-  useChangeLocale,
-  useCurrentLocale,
-  useScopedI18n,
-} from "@/locales/client";
+import { useChangeLocale, useCurrentLocale } from "@/locales/client";
 
 export default function LanguageSwitcher() {
-  const t = useScopedI18n("Header.LanguageSwitcher");
   const locale = useCurrentLocale();
   const changeLocale = useChangeLocale({ preserveSearchParams: true });
 

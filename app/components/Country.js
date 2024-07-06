@@ -6,6 +6,7 @@ import countries from "i18n-iso-countries";
 import { getScopedI18n } from "@/locales/server";
 import { Motion } from "./Motion";
 import { I18nProviderClient } from "@/locales/client";
+import Image from "next/image";
 
 export default async function Country({ country, locale }) {
   const borderCountryCodes = country.borders;
@@ -18,7 +19,7 @@ export default async function Country({ country, locale }) {
     const data = await fetch(
       query,
       { cache: "force-cache" },
-      { next: { revalidate: 604800 } }
+      { next: { revalidate: 604800 } },
     ).then((res) => res.json());
     return data;
   }
@@ -27,15 +28,15 @@ export default async function Country({ country, locale }) {
 
   return (
     <div className="relative mx-6 mt-5 flex flex-col sm:mx-16">
-      <div className="relative flex w-full mb-12 flex-col-reverse justify-between sm:flex-row ">
-        <div className="items-left relative sm:max-w-[50%] ml-3 flex flex-col text-left text-lg">
+      <div className="relative mb-12 flex w-full flex-col-reverse justify-between sm:flex-row">
+        <div className="items-left relative ml-3 flex flex-col text-left text-lg sm:max-w-[50%]">
           <Motion
             type="h1"
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.4, type: "spring" }}
             title={country.name.common}
-            className="mt-8 text-4xl w-fit sm:text-nowrap font-bold sm:mt-0"
+            className="mt-8 w-fit text-4xl font-bold sm:mt-0 sm:text-nowrap"
           >
             {countries.getName(country.cca3, locale) || country.name.common}
           </Motion>
@@ -43,7 +44,7 @@ export default async function Country({ country, locale }) {
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 2.2, type: "spring" }}
-            className=" flex flex-col gap-x-20 sm:flex-row"
+            className="flex flex-col gap-x-20 sm:flex-row"
           >
             <div className="flex flex-col gap-y-1 sm:gap-y-2">
               <p className="mt-12 font-bold">
@@ -61,7 +62,7 @@ export default async function Country({ country, locale }) {
                     country.region}
                 </span>
               </p>
-              <p className="font-bold truncate sm:max-w-[250px]">
+              <p className="truncate font-bold sm:max-w-[250px]">
                 {t("capital")}{" "}
                 <span
                   title={country.capital ? country.capital.join(", ") : ""}
@@ -95,7 +96,7 @@ export default async function Country({ country, locale }) {
                 {t("subRegion")}{" "}
                 <span className="font-normal">{country.subregion}</span>
               </p>
-              <p className="font-bold sm:truncate sm:max-w-[230px]">
+              <p className="font-bold sm:max-w-[230px] sm:truncate">
                 {t("topLevelDomain")}{" "}
                 <span
                   title={
@@ -107,7 +108,7 @@ export default async function Country({ country, locale }) {
                   {country.tld ? Object.values(country.tld).join(", ") : ""}
                 </span>
               </p>
-              <p className="font-bold sm:truncate sm:max-w-[200px]">
+              <p className="font-bold sm:max-w-[200px] sm:truncate">
                 {t("languages")}{" "}
                 <span
                   title={
@@ -139,8 +140,8 @@ export default async function Country({ country, locale }) {
                 {borderCountries.map((country, index) => (
                   <Link
                     key={index}
-                    href={`/countries/${country.cca3}`}
-                    className=" flex-1 select-none text-nowrap rounded-lg border-1 border-solid p-2 text-center hover:border-black hover:text-neutral-600 sm:flex-none"
+                    href={`/${country.cca3.toLowerCase()}`}
+                    className="flex-1 select-none text-nowrap rounded-lg border-1 border-solid p-2 text-center hover:border-black hover:text-neutral-600 sm:flex-none"
                   >
                     <p className="font-normal">
                       {countries.getName(country.cca3, locale) ||
@@ -163,12 +164,14 @@ export default async function Country({ country, locale }) {
             type: "spring",
             stiffness: 70,
           }}
-          className="relative mx-5 flex flex-col gap-y-6 items-end bg-transparent h-auto sm:max-w-[50%] sm:mx-0 "
+          className="relative mx-5 flex h-auto flex-col items-end gap-y-6 bg-transparent sm:mx-0 sm:max-w-[50%]"
         >
-          <img
+          <Image
             src={country.flags.svg}
             alt={country.flags.alt}
-            className=" select-none object-cover h-auto drop-shadow-2xl shadow-large rounded-md"
+            width={550}
+            height={300}
+            className="h-auto select-none rounded-md object-cover shadow-large drop-shadow-2xl"
           />
           <div className="hidden lg:flex">
             <I18nProviderClient locale={locale}>
