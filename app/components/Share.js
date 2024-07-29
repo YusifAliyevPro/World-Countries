@@ -136,15 +136,15 @@ export default function Share({ country, locale }) {
             <>
               <ModalHeader className="flex w-full flex-row items-center justify-center gap-3 font-bold">
                 <BiSolidShareAlt className="mt-1 text-4xl" />
-                <h6 className="text-3xl font-bold select-none">{t("share")}</h6>
+                <h6 className="select-none text-3xl font-bold">{t("share")}</h6>
               </ModalHeader>
               <ModalBody className="p-8">
-                <div className="no-scrollbar relative select-none mb-10 flex flex-1 p-2 flex-row items-center gap-4 overflow-x-scroll scrollbar-hide">
+                <div className="no-scrollbar relative mb-10 flex flex-1 select-none flex-row items-center gap-4 overflow-x-scroll p-2 scrollbar-hide">
                   <div
                     className="relative flex w-fit cursor-pointer flex-col items-center rounded-lg p-2 hover:shadow-medium"
                     onClick={() => handleShare("whatsapp")}
                   >
-                    <BiLogoWhatsapp className=" text-7xl text-blue-600" />
+                    <BiLogoWhatsapp className="text-7xl text-blue-600" />
                     <p className="font-bold">WhatsApp</p>
                   </div>
                   {window.innerWidth < window.innerHeight ? (
@@ -190,14 +190,14 @@ export default function Share({ country, locale }) {
                     ""
                   )}
                 </div>
-                <div className=" mx-auto ">
+                <div className="mx-auto">
                   <Snippet
                     symbol=""
                     variant="bordered"
-                    codeString={`${baseURL}/${locale}/countries/${country.cca3}`}
+                    codeString={`${baseURL}/${locale}/${country.cca3.toLowerCase()}`}
                   >
                     <div className="line-clamp-1 w-48 flex-row truncate text-nowrap lg:w-80">
-                      {`${baseURL}/${locale}/countries/${country.cca3}`}
+                      {`${baseURL}/${locale}/${country.cca3.toLowerCase()}`}
                     </div>
                   </Snippet>
                 </div>

@@ -9,6 +9,7 @@ import turLocale from "i18n-iso-countries/langs/tr.json";
 import useStore from "@/lib/store";
 import Fuse from "fuse.js";
 import { useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 
 export default function Countries({ countriess, locale }) {
   countriesTranslation.registerLocale(azeLocale);
@@ -45,46 +46,54 @@ export default function Countries({ countriess, locale }) {
   }, [renderedCountries]);
   return (
     <div className="justify-content-center mx-4 flex flex-wrap items-center justify-center gap-x-10">
-      {renderedCountries.map((country, index) => (
-        <Motion
-          initial={{ scale: 1 }}
-          whileHover={{ scale: 1.1 }}
-          key={index + 30 * (page - 1)}
-          transition={{ type: "spring", stiffness: 120, duration: 0.6 }}
-        >
-          <Link
-            href={`/${country.cca3.toLowerCase()}`}
-            className="justify-content-center relative mt-10 inline-block w-[325px] select-none shadow-medium items-center justify-center rounded-xl bg-gray-200 text-center"
+      <AnimatePresence mode="wait">
+        {renderedCountries.map((country, index) => (
+          <Motion
+            key={index + 30 * (page - 1)}
+            initial={{ opacity: 0, y: 200 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 300 }}
           >
-            <div className="relative">
-              <Image
-                src={country.flags.svg}
-                height={180}
-                width={325}
-                alt={country.flags.alt}
-                className="h-[185px] w-full rounded-t-xl object-cover"
-              />
-            </div>
-            <p className="my-3 ml-8 mr-6 truncate text-left text-2xl font-bold text-black">
-              {countriesTranslation.getName(country.cca3, locale) ||
-                country.name.common}
-            </p>
-            <p className="text-md my-3 ml-8  text-left text-slate-900">
-              <span className="font-bold">{t("capital")} </span>{" "}
-              {country.capital}
-            </p>
-            <p className="text-md my-3 ml-8  text-left text-slate-900">
-              <span className="font-bold">{t("region")} </span>{" "}
-              {t(`Continents.${country.region.toLowerCase()}`) ||
-                country.region}
-            </p>
-            <p className="text-md my-3 ml-8  text-left text-slate-900">
-              <span className="font-bold">{t("population")} </span>{" "}
-              {country.population.toLocaleString(locale)}
-            </p>
-          </Link>
-        </Motion>
-      ))}
+            <Motion
+              initial={{ scale: 1 }}
+              whileHover={{ scale: 1.1 }}
+              transition={{ type: "spring", stiffness: 120, duration: 0.6 }}
+            >
+              <Link
+                href={`/${country.cca3.toLowerCase()}`}
+                className="justify-content-center relative mt-10 inline-block w-[325px] select-none items-center justify-center rounded-xl bg-gray-200 text-center shadow-medium"
+              >
+                <div className="relative">
+                  <Image
+                    src={country.flags.svg}
+                    height={180}
+                    width={325}
+                    alt={country.flags.alt}
+                    className="h-[185px] w-full rounded-t-xl object-cover"
+                  />
+                </div>
+                <p className="my-3 ml-8 mr-6 truncate text-left text-2xl font-bold text-black">
+                  {countriesTranslation.getName(country.cca3, locale) ||
+                    country.name.common}
+                </p>
+                <p className="text-md my-3 ml-8 text-left text-slate-900">
+                  <span className="font-bold">{t("capital")} </span>{" "}
+                  {country.capital}
+                </p>
+                <p className="text-md my-3 ml-8 text-left text-slate-900">
+                  <span className="font-bold">{t("region")} </span>{" "}
+                  {t(`Continents.${country.region.toLowerCase()}`) ||
+                    country.region}
+                </p>
+                <p className="text-md my-3 ml-8 text-left text-slate-900">
+                  <span className="font-bold">{t("population")} </span>{" "}
+                  {country.population.toLocaleString(locale)}
+                </p>
+              </Link>
+            </Motion>
+          </Motion>
+        ))}
+      </AnimatePresence>
     </div>
   );
 }

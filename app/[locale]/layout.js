@@ -72,13 +72,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   const locale = getCurrentLocale();
   return (
-    <html lang={locale} className="scroll-smooth bg-white text-black light">
+    <html
+      lang={locale}
+      className="flex min-h-screen flex-col scroll-smooth bg-white text-black light"
+    >
       <body className={inter.className}>
         <Providers>
           <I18nProviderClient locale={locale}>
             <Header locale={locale} />
           </I18nProviderClient>
-          <main className="flex min-h-screen flex-col">{children}</main>
+          {children}
           <Footer />
           <Toaster
             toastOptions={{
