@@ -61,6 +61,7 @@ export const metadata = {
   authors: [{ name: "YusifAliyevPro", url: "https://yusifaliyevpro.com" }],
   siteName: "World Countriess",
   openGraph: {
+    images: ["/World-countriess.png"],
     type: "website",
     title: "World Countriess",
     url: `/`,
