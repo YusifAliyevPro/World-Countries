@@ -73,7 +73,7 @@ export default async function CountryPage({ params }) {
     return notFound();
   }
   return (
-    <main>
+    <main className="min-h-svh">
       <I18nProviderClient locale={locale}>
         <Suspense fallback={<p>Loading...</p>}>
           <Breadcrumb

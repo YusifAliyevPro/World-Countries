@@ -43,7 +43,7 @@ export default async function Home({ params }) {
     countries.length !== undefined ? countries.length : 0,
   );
   return (
-    <main className="mb-10 mt-12">
+    <main className="mb-10 mt-12 min-h-svh">
       <I18nProviderClient locale={locale}>
         <Suspense
           fallback={
