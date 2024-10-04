@@ -68,6 +68,9 @@ export const metadata = {
     siteName: "World Countriess",
     locale: "en_US",
   },
+  other: {
+    "google-site-verification": "HNjp-JRQToNMjuOEzQ7iFVr2h4sZi4q26x4Tli62gow",
+  },
 };
 
 export default function RootLayout({ children }) {
